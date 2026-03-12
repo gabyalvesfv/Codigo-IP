@@ -1,0 +1,33 @@
+entrada = ""
+lista_viloes = []
+
+while entrada != "Já temos nossa lista de vilões" :
+    entrada = input()
+    if entrada == "Novo vilão - Muito Perigoso" :
+        nome_vilao = input()
+        lista_viloes.insert(0, nome_vilao)
+    elif entrada == "Novo vilão - Meio perigoso" :
+        nome_vilao = input()
+        lista_viloes.append(nome_vilao)
+    elif entrada == "O que ele está fazendo aqui?" :
+        nome_vilao = input()
+        lista_viloes.remove(nome_vilao)
+    elif entrada == "Vilão mais perigoso do que pensávamos" :
+        idx_atual = int(input())
+        idx_atualizado = int(input())
+        lista_viloes[idx_atual], lista_viloes[idx_atualizado] = lista_viloes[idx_atualizado],  lista_viloes[idx_atual]
+    elif entrada == "Que estranho, esses dois vilões… troque-os de lugar" :
+        nome_vilao = input()
+        nome_vilao2 = input()
+        idx = lista_viloes.index(nome_vilao)
+        idx2 = lista_viloes.index(nome_vilao2)
+        lista_viloes[idx], lista_viloes[idx2] = lista_viloes[idx2], lista_viloes[idx]
+    elif entrada == "Essa posição não está de acordo, ele nem odeia carecas" :
+        nome_vilao = input()
+        lista_viloes.remove(nome_vilao)
+        lista_viloes.append(nome_vilao)
+    elif entrada == "Como a lista está ficando?" :
+        print(", ".join(lista_viloes))
+
+print ("O resultado final ficou assim:")
+print (", ".join(lista_viloes))
