@@ -1,0 +1,135 @@
+# Dados feiticeiro 
+nome_feiticeiro = input()
+vida_feiticeiro = int(input())
+ataque_feiticeiro = int(input())
+defesa_feiticeiro = int(input())
+reversao_feitiço = input().lower() == "true"
+expansão_dominio = input().lower() == "true"
+
+# Dados mahoraga
+vida_mahoraga = int(input())
+ataque_mahoraga = int(input())
+defesa_mahoraga = int(input())
+
+ataques_usados = []
+
+# Lista de golpes 
+lista_golpes = input().split(", ")
+
+if reversao_feitiço :
+    print ("Mesmo com a regeneração, ainda não vai ser fácil! Vamos nessa!")
+else :
+    print ("Exorcizar o Mahoraga sem conseguir me curar vai ser bem difícil, mas eu não tenho escolha!")
+
+fim = False
+
+# Movimentos 
+while not fim :
+    mov_feiticeiro = input()
+
+    # Movimento do feiticeiro 
+    if mov_feiticeiro not in lista_golpes and mov_feiticeiro != "black flash" and mov_feiticeiro != "expansão de domínio" and mov_feiticeiro != "reversão de feitiço" :
+        print ("Eu não sei que ideia é essa de tentar usar um golpe que eu não domino!")
+
+    elif mov_feiticeiro == "expansão de domínio" :
+        if expansão_dominio:
+            if nome_feiticeiro != "Satoru Gojo" :
+                print ("Nem mesmo a sua adaptação pode derrotar isto!")
+                print(f"{nome_feiticeiro} conseguiu!")
+                vida_mahoraga = 0 
+                fim = True 
+            else :
+                print (f"Como assim o Mahoraga já se adaptou ao infinito de {nome_feiticeiro}!?")
+        else : 
+            print ("Droga. Eu não aprendi a expandir meu domínio ainda!")
+
+    elif mov_feiticeiro == "black flash" :
+        print ("As faíscas negras ignoram qualquer tipo de defesa! Toma essa Mahoraga!")
+        valor_ataque = ((ataque_feiticeiro + 25) * 2)
+        valor_ataque = int(valor_ataque)
+        vida_mahoraga -= valor_ataque
+
+        if vida_mahoraga <= 0 :
+            print(f"{nome_feiticeiro} conseguiu!")
+            fim = True
+    
+    elif mov_feiticeiro == "reversão de feitiço" :
+        if reversao_feitiço:
+            vida_feiticeiro += 25
+            print ("Eu posso continuar lutando mais um pouco...")
+
+    elif mov_feiticeiro in lista_golpes :
+        valor_ataque = (ataque_feiticeiro - defesa_mahoraga) + 25
+        valor_ataque = int(valor_ataque)
+
+        if mov_feiticeiro not in ataques_usados :
+            ataques_usados.append(mov_feiticeiro)
+            vida_mahoraga -= valor_ataque
+            print (f"A roda do Mahoraga girou uma vez! {mov_feiticeiro} só vai funcionar mais duas vezes")
+        elif ataques_usados.count(mov_feiticeiro) == 1 :
+            ataques_usados.append(mov_feiticeiro)
+            valor_ataque = (valor_ataque) // 2
+            vida_mahoraga -= valor_ataque
+            print(f"A roda do Mahoraga girou pela segunda vez! {mov_feiticeiro} só vai funcionar mais uma vez")
+        elif ataques_usados.count(mov_feiticeiro) == 2 :
+            ataques_usados.append(mov_feiticeiro)
+            valor_ataque = (valor_ataque) // 4
+            vida_mahoraga -= valor_ataque
+            print(f"A roda do Mahoraga girou pela terceira vez! {mov_feiticeiro} não vai funcionar mais")
+        else :
+            print("Esse ataque é inútil! Melhor tentar outra coisa.")
+        
+        if vida_mahoraga <= 0:
+            print(f"{nome_feiticeiro} conseguiu!")
+            fim = True
+
+    mov_mahoraga = input()
+
+    # Movimento do mahoraga
+    if vida_mahoraga > 0 :
+        if mov_mahoraga == "ataque" :  
+            valor_ataque = (ataque_mahoraga - defesa_feiticeiro) + 25
+            valor_ataque = int(valor_ataque)
+            vida_feiticeiro -= valor_ataque
+
+            if vida_feiticeiro <= 0:
+                fim = True 
+
+        elif mov_mahoraga == "regeneração" :
+            vida_mahoraga += 25
+            print("Ele está se regenerando.")
+
+    if (mov_mahoraga == "adaptação") :
+        if  (mov_feiticeiro == "black flash") : 
+            print ("Nem você vai conseguir se adaptar a isso, mahoraga!")
+        else: 
+            if mov_feiticeiro not in ataques_usados :
+                ataques_usados.append(mov_feiticeiro)
+                print (f"A roda do Mahoraga girou uma vez! {mov_feiticeiro} só vai funcionar mais duas vezes")
+            elif ataques_usados.count(mov_feiticeiro) == 1 :
+                ataques_usados.append(mov_feiticeiro)
+                print(f"A roda do Mahoraga girou pela segunda vez! {mov_feiticeiro} só vai funcionar mais uma vez")
+            elif ataques_usados.count(mov_feiticeiro) == 2 :
+                ataques_usados.append(mov_feiticeiro)
+                print(f"A roda do Mahoraga girou pela terceira vez! {mov_feiticeiro} não vai funcionar mais")
+
+    if len(lista_golpes) * 3 == len(ataques_usados) :
+        print ('Droga... Eu não tenho mais nada pra usar contra o Mahoraga... Essa luta acabou.')
+        vida_feiticeiro = 0
+        fim = True 
+
+# Mensagem final 
+if vida_feiticeiro <= 0:
+    if nome_feiticeiro == "Satoru Gojo":
+        print("Magnífico, Satoru Gojo. Lembrarei de você enquanto eu durar nesta vida.")
+    else:
+        print(f"Parece que nem mesmo {nome_feiticeiro} foi pareo contra o Mahoraga...")
+if vida_mahoraga <= 0:
+    if nome_feiticeiro == "Satoru Gojo":
+        print("Nem você sua adaptação é páreo para o infinito, queridinho.")
+    elif nome_feiticeiro == "Megumi Fushiguro":
+        print("Depois de muito tempo, finalmente o Mahoraga foi exorcizado. Fushiguro é o primeiro usuário das dez sombras a conseguir esse feito!")
+    elif nome_feiticeiro == "Sukuna":
+        print("Você me mostrou o caminho, Megumi Fushiguro, e por isso eu sou grato!")
+    else:
+        print("Depois de muito tempo, finalmente o Mahoraga foi exorcizado, mas Fushiguro não participou da luta, logo o ritual foi anulado.")
