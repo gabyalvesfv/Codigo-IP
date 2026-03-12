@@ -1,0 +1,32 @@
+def encontra_tesouros (caminho, energia, itens_raros, moedas ) :
+    
+    if energia > 0 and len(caminho) != 0 :
+        # Apenas avança 
+        if caminho[0] == "X" :
+            encontra_tesouros(caminho[1:], energia - 1, itens_raros, moedas)
+        # Moeda
+        elif caminho[0].isnumeric() :
+            encontra_tesouros(caminho[1:], energia - 1, itens_raros, moedas + int(caminho[0]))
+        # Item raro 
+        else :
+            print(f"Oba! Encontrei um {caminho[0]} 🐧🎉")
+            encontra_tesouros(caminho[1:], energia + 1, itens_raros + 1, moedas)
+   
+    elif energia == 0 or len(caminho) == 0 :
+        if energia == 0 :
+            print("Ah, cansei. Vou descansar.")
+
+        if itens_raros == 0 and moedas == 0:
+            print("Essa caminhada não foi nada produtiva. É melhor ir pescar.")
+        elif itens_raros == 0  and moedas != 0 :
+            print (f"Estamos ricos!! Encontrei {moedas} moedas.")
+        elif itens_raros != 0 and moedas == 0:
+            print (f"Dinheiro? Não temos. Mas temos {itens_raros} itens raros.")
+        elif itens_raros != 0 and moedas != 0 :
+            print (f"Quem diria!! {moedas} moedas e {itens_raros} itens raros. Hoje eu mereço bolo, não aqueles puffitos de sempre.")
+
+    
+entrada =input()
+caminho = entrada.split(", ")
+
+encontra_tesouros(caminho, 4, 0, 0)
