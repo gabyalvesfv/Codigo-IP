@@ -1,0 +1,39 @@
+inicial = str(input())
+presentes = 0 
+tempo_total = 0
+
+print ("Boa noite, Papai Noel! Feliz Natal!") 
+
+while inicial != "Já está amanhecendo, preciso voltar ao Polo Norte! HO HO HO!" :
+    nome = str(input())
+    distancia = float(input())
+    unid_medida = str(input())
+
+    if unid_medida == "metros" :
+        tempo_h = ((distancia / 1000) / 80)
+        tempo_min = tempo_h * 60
+        if 1 > tempo_h >= 1/60 :
+          print (f"Querido Papai Noel, você levará {int(tempo_min)} minutos para chegar até a casa de {nome}!")
+          tempo_total += tempo_h
+        elif tempo_h >= 1 :
+          print (f"Querido Papai Noel, você levará {int(tempo_h)} horas para chegar até a casa de {nome}!")
+          tempo_total += tempo_h
+        elif tempo_h < 1/60 : 
+          print (f"Querido Papai Noel, você chegará em breve na casa de {nome}!")
+          tempo_total += tempo_h
+    elif unid_medida == "quilometros" :
+        tempo_h = (distancia / 80)
+        if tempo_h >= 1 :
+          print (f"Querido Papai Noel, você levará {int(tempo_h)} horas para chegar até a casa de {nome}!")
+          tempo_total += tempo_h
+        elif tempo_h <= 1/60 :
+          print (f"Querido Papai Noel, você chegará em breve na casa de {nome}!")
+          tempo_total += tempo_h
+        elif 1/60 <= tempo_h < 1 :
+          tempo_min = tempo_h * 60
+          print (f"Querido Papai Noel, você levará {int(tempo_min)} minutos para chegar até a casa de {nome}!")
+          tempo_total += tempo_h
+    presentes += 1
+    inicial = str(input())
+else :
+    print(f"Querido Papai Noel, a noite de natal foi um sucesso! Você levou apenas {tempo_total:.2f} horas para entregar todos os {presentes} presentes")
