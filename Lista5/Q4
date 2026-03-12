@@ -1,0 +1,100 @@
+def somas_possiveis(lista_crioptografada, K) :
+    combinacoes = []
+
+    def encontra_soma(lista_descriptografada, soma, inicio) :
+        # Caso base
+        if soma == K and len(lista_descriptografada) != 0 :
+            combinacoes.append(lista_descriptografada[:])  
+            return
+        # Caso base
+        if soma > K :  
+            return
+        
+        # Passo recursivo
+        for j in range(inicio, len(lista_crioptografada)) :  
+            # Pula combinações duplicadas
+            if j > inicio and lista_crioptografada[j] == lista_crioptografada[j - 1] :
+                continue  
+            
+            lista_descriptografada.append(lista_crioptografada[j])
+
+            encontra_soma(lista_descriptografada, soma + lista_crioptografada[j], j + 1)  
+
+            # Decarta o numero depois da recursão
+            lista_descriptografada.pop()  
+ 
+    encontra_soma([], 0, 0)  
+
+    return combinacoes
+
+# Checa de os números sao iguais 
+def checa_numero(senha) :
+    n = senha[0]
+    for q in range(len(senha)) :
+        if senha[q] != n :
+            return False
+    return True
+
+portas = int(input())
+
+for i in range (1, portas + 1) :
+    lista_crioptografada = input().split(', ')
+    K = int(input())
+     
+    # Transforma elementos da lista em int 
+    for n in range (len(lista_crioptografada)) :
+        lista_crioptografada[n] = int(lista_crioptografada[n])
+
+    lista_crioptografada_original = lista_crioptografada[:]
+    lista_crioptografada.sort() 
+
+    combinacoes = somas_possiveis(lista_crioptografada, K)
+
+    # Caso não seja possível descobrir a senha
+    if len(combinacoes) == 0:
+        print("Não foi possível descobrir a senha dessa porta, Penguin Bond deve procurar outra entrada!")
+        break  
+
+    # Encontra a melhor soma 
+    melhor_soma = combinacoes[0]  
+    for m in range(1, len(combinacoes)) : 
+        if len(combinacoes[m]) > len(melhor_soma) :  
+            melhor_soma = combinacoes[m]
+
+    # Checa se precisa ou nao ordenar os números 
+    if checa_numero(melhor_soma) == True:
+        melhor_soma_ordenada = melhor_soma
+    else:
+        # Ordena os elementos da lista na ordem original do input
+        melhor_soma_ordenada = []
+        for num in lista_crioptografada_original :
+            if num in melhor_soma :
+                melhor_soma_ordenada.append(num)               
+
+    # Faz as seleções das observações exigidas
+    senha = []
+    for x in melhor_soma_ordenada :
+        if x != 0 and x > 0 :
+            senha.append(x)
+        if x < 0 :
+            x = -x
+            senha.append(x)
+
+    # Transforma os elementos da lista senha em str
+    for c in range (len(senha)) :
+       senha[c] = str(senha[c])
+
+    senha_temp = ''.join(senha)
+
+    lista_algarismos = []
+    for algarismo in senha_temp :
+        if algarismo != '0' :
+            lista_algarismos.append(algarismo)
+    
+    senha_final = ''.join(lista_algarismos)
+
+    if len(lista_algarismos) >=  4 :
+        print (f"A senha da porta {i} é: {senha_final}")
+    elif len(lista_algarismos) < 4 :
+        print ("Não foi possível descobrir a senha dessa porta, Penguin Bond deve procurar outra entrada!")     
+        break
