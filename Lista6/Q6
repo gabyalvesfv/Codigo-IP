@@ -1,0 +1,216 @@
+vida_alianca = 1000
+riqueza_alianca = 20000
+num_soldados_alianca = 10000
+
+vida_coroa = 1000
+riqueza_coroa = 20000
+num_soldados_coroa = 10000
+
+alianca = ["PE", "PB", "RN", "CE", "AL", "BA"]
+coroa_portuguesa = ["SP", "RJ", "ES", "PR", "RS", "MG"]
+vantagens = ("PE", "PB", "RN")
+armas_disponiveis = {"Mosquete": 7000, "Baioneta": 3000, "Canhão": 10000, "Espada": 3500, "Pederneira": 5000}
+
+anexados_alianca = []
+anexados_coroa = []
+
+cont_vit_alianca = 0
+cont_der_alianca = 0
+cont_vit_coroa = 0
+cont_der_coroa = 0
+
+ultimo_anexado_alianca = ''
+ultimo_anexado_coroa = ''
+
+for i in range (1, 4) :
+    # Estado atacante 
+    atacante = input()
+    while atacante not in coroa_portuguesa and atacante not in alianca :
+        print ("@ estado não encontrado ou não faz parte das regiões em guerra! @")
+        atacante = input()
+
+    dinheiro_atacante = int(input())
+    soldados_atacante = int(input())
+
+    arma1_atacante = input()
+    while arma1_atacante not in armas_disponiveis :
+        print ("@ selecione uma arma válida! @")
+        arma1_atacante = input()
+
+    arma2_atacante = input()
+    while arma2_atacante not in armas_disponiveis :
+        print ("@ selecione uma arma válida! @")
+        arma2_atacante = input()
+
+    arma3_atacante = input()
+    while arma3_atacante not in armas_disponiveis :
+        print ("@ selecione uma arma válida! @")
+        arma3_atacante = input()
+
+    # Estado defensor 
+    defensor = input()
+    while (atacante in coroa_portuguesa and defensor not in alianca) or (atacante in alianca and defensor not in coroa_portuguesa) :
+        print ("@ escolha um estado válido para contra-atacar! @")
+        defensor = input()
+
+    dinheiro_defensor = int(input())
+    soldados_defensor = int(input())
+
+    arma1_defensor = input()
+    while arma1_defensor not in armas_disponiveis :
+        print ("@ selecione uma arma válida! @")
+        arma1_defensor = input()
+
+    arma2_defensor = input()
+    while arma2_defensor not in armas_disponiveis :
+        print ("@ selecione uma arma válida! @")
+        arma2_defensor = input()
+
+    arma3_defensor = input()
+    while arma3_defensor not in armas_disponiveis :
+        print ("@ selecione uma arma válida! @")
+        arma3_defensor = input()
+
+    # Somatório da letalidade das armas 
+    letalidade_atacante = armas_disponiveis[arma1_atacante] + armas_disponiveis[arma2_atacante] + armas_disponiveis[arma3_atacante]
+    letalidade_defensor = armas_disponiveis[arma1_defensor] + armas_disponiveis[arma2_defensor] + armas_disponiveis[arma3_defensor]
+
+    # Cálculo da força 
+    forca_atacante = ((dinheiro_atacante * 2) + (soldados_atacante * 4) + (letalidade_atacante) * 4) / 10
+    forca_defensor = ((dinheiro_defensor * 2) + (soldados_defensor * 4) + (letalidade_defensor) * 4) / 10
+    
+    # Vantagem de batalha 
+    if atacante in vantagens :
+        print (f"o estado de {atacante} ganhou 10% de força pois está lutando em um campo de batalha que lhe confere vantagem!")
+        forca_atacante = 1.1 * forca_atacante
+
+    # Duelo 
+    vencedor = ''
+    perdedor = ''
+    dano = 0
+
+    if atacante in coroa_portuguesa :
+        if forca_atacante > forca_defensor :
+            vencedor = atacante 
+            perdedor = defensor 
+            dano = vida_alianca * (1 - forca_defensor / forca_atacante)
+            vida_alianca -= dano
+        elif forca_atacante < forca_defensor :
+            vencedor = defensor 
+            perdedor = atacante 
+            dano = vida_coroa * (1 - forca_atacante / forca_defensor)
+            vida_coroa -= dano
+        elif forca_atacante == forca_defensor :
+            dano = 0 
+    elif atacante in alianca :
+        if forca_atacante > forca_defensor :
+            vencedor = atacante 
+            perdedor = defensor 
+            dano = vida_coroa * (1 - forca_defensor / forca_atacante)
+            vida_coroa -= dano
+        elif forca_atacante < forca_defensor :
+            vencedor = defensor 
+            perdedor = atacante 
+            dano = vida_alianca * (1 - forca_atacante / forca_defensor)
+            vida_alianca -= dano
+        elif forca_atacante == forca_defensor :
+            dano = 0 
+
+    # Atualização de riqueza e soldados
+    if atacante in alianca :
+        riqueza_alianca -= dinheiro_atacante
+        num_soldados_alianca -= soldados_atacante
+        riqueza_coroa -= dinheiro_defensor
+        num_soldados_coroa -= soldados_defensor
+    elif atacante in coroa_portuguesa :
+        riqueza_coroa -= dinheiro_atacante
+        num_soldados_coroa -= soldados_atacante
+        riqueza_alianca -= dinheiro_defensor
+        num_soldados_alianca -= soldados_defensor
+
+    if vencedor :
+        print (f"o estado de {vencedor} acaba de consagrar mais uma vitória e derrotou o estado de {perdedor} e agora o anexará!")
+        # Anexação
+        if vencedor in alianca:
+            anexados_alianca.append(perdedor)
+            if perdedor in coroa_portuguesa :
+                coroa_portuguesa.remove(perdedor)
+            if perdedor in anexados_coroa :
+                anexados_coroa.remove(perdedor)
+            ultimo_anexado_alianca = perdedor
+        elif vencedor in coroa_portuguesa:
+            anexados_coroa.append(perdedor)
+            if perdedor in alianca :
+                alianca.remove(perdedor)
+            if perdedor in anexados_alianca :
+                anexados_alianca.remove(perdedor)
+            ultimo_anexado_coroa = perdedor
+    else :
+        print ("na batalha desta rodada houve um empate!!!")
+
+    # Reintegração do último estado anexado
+    if vencedor in alianca and ultimo_anexado_coroa :
+        alianca.append(ultimo_anexado_coroa)
+        anexados_coroa.remove(ultimo_anexado_coroa)
+        ultimo_anexado_coroa = ''
+    elif vencedor in coroa_portuguesa and ultimo_anexado_alianca :
+        coroa_portuguesa.append(ultimo_anexado_alianca)
+        anexados_alianca.remove(ultimo_anexado_alianca)
+        ultimo_anexado_alianca = ''
+
+    # Contagem das vitórias e derrotas 
+    if vencedor in alianca :
+        cont_vit_alianca += 1
+        cont_der_coroa += 1
+    elif vencedor in coroa_portuguesa :
+        cont_vit_coroa += 1
+        cont_der_alianca += 1
+
+    # Interrupção de batalha 
+    if riqueza_alianca <= 0 or num_soldados_alianca <= 0 :
+        print ("a alianca não possui recursos suficientes para continuar com a guerra! O vencedor será aquele que tiver o maior ponto de vida")
+        break
+    elif riqueza_coroa <= 0 or num_soldados_coroa <= 0 :
+        print("a coroa não possui recursos suficientes para continuar com a guerra! O vencedor será aquele que tiver o maior ponto de vida")
+        break
+
+    # Arredonda a vida 
+    vida_alianca = round(vida_alianca, 2)
+    vida_coroa = round(vida_coroa, 2)
+
+    print (f"=== resultado da {i}º batalha ===")
+    print ()
+    print (f"número de estados da aliança: {len(alianca)}")
+    print (f"vitorias: {cont_vit_alianca}")
+    print (f"derrotas: {cont_der_alianca}")
+    print (f"riqueza: {riqueza_alianca:.1f}")
+    print (f"nº soldados: {num_soldados_alianca}")
+    print (f"pontos de vida: {vida_alianca:.2f}")
+    print ()
+    print (f"número de estados da coroa: {len(coroa_portuguesa)}")
+    print (f"vitórias: {cont_vit_coroa}")
+    print (f"derrotas: {cont_der_coroa}")
+    print (f"riqueza: {riqueza_coroa:.1f}")
+    print (f"nº soldados: {num_soldados_coroa}")
+    print (f"pontos de vida: {vida_coroa:.2f}")
+    print ()
+
+    if vencedor in alianca :
+        print(f"a alianca anexou o(s) seguinte(s) estado(s): {','.join(anexados_alianca)}")
+    elif vencedor in coroa_portuguesa :
+        print(f"a coroa anexou o(s) seguinte(s) estado(s): {','.join(anexados_coroa)}")
+
+if riqueza_alianca <= 0 or num_soldados_alianca <= 0 or riqueza_coroa <= 0 or num_soldados_coroa <= 0 :
+    if vida_coroa > vida_alianca :
+        print ("infelizmente o sonho acabou! A revolução falhou o império Português venceu!")
+    elif vida_alianca > vida_coroa :
+        print ("VIVA! A Revolução vingou, Pernambuco se uniu aos outros estados do Nordeste e ao Estado de Minas Gerais e criou a república Pernambucana!")
+    elif vida_coroa == vida_alianca :
+        print ("a guerra foi em vão! As coisas ficarão como estão!")
+else :
+    if cont_vit_coroa > cont_vit_alianca :
+        print ("infelizmente o sonho acabou! A revolução falhou o império Português venceu!")
+    elif cont_vit_alianca > cont_vit_coroa :
+        print ("VIVA! A Revolução vingou, Pernambuco se uniu aos outros estados do Nordeste e ao Estado de Minas Gerais e criou a república Pernambucana!")
+    elif cont_vit_coroa == cont_vit_alianca :
+        print ("a guerra foi em vão! As coisas ficarão como estão!")
