@@ -1,0 +1,53 @@
+
+def calcula_taxa(populacao_piltover, populacao_zaun) :
+    global taxa_distribuicao, recursos_piltover, recursos_zaun
+    taxa_distribuicao = total_recursos / (populacao_piltover + populacao_zaun)
+    recursos_piltover = taxa_distribuicao * populacao_piltover
+    recursos_zaun = taxa_distribuicao * populacao_zaun
+    
+def distribuir_recursos(recursos_zaun, recursos_piltover) :
+    global distribuicao_recursos
+    distribuicao_recursos = recursos_zaun/recursos_piltover
+
+def mensagem() :
+    print (f"Foi decidido que será {recursos_piltover:.1f} para Piltover e {recursos_zaun:.1f} para Zaun!")
+
+
+total_recursos = int(input())
+populacao_piltover = int(input())
+populacao_zaun = int(input())
+situacao_zaun = input()
+
+if situacao_zaun == "desastre" :
+    recursos_zaun = 0.9 * total_recursos # 0.9 dos recursos para Zaun
+    recursos_piltover = 0.1 * total_recursos # 0.1 dos recursos para Piltover
+elif situacao_zaun == "crise" :
+    recursos_zaun = 0.8 * total_recursos # 0.8 dos recursos para Zaun
+    recursos_piltover = 0.2 * total_recursos # 0.2 dos recursos para Piltover
+elif situacao_zaun == "critica" :
+    recursos_zaun = 0.7 * total_recursos # 0.7 dos recursos para Zaun
+    recursos_piltover = 0.3 * total_recursos # 0.3 dos recursos para Piltover
+elif situacao_zaun == "normal" :
+    recursos_zaun = 0.6 * total_recursos # 0.6 dos recursos para Zaun
+    recursos_piltover = 0.4 * total_recursos # 0.4 dos recursos para Piltover
+elif situacao_zaun == "tranquilo" :
+    recursos_zaun = 0.5 * total_recursos # 0.5 dos recursos para Zaun
+    recursos_piltover = 0.5 * total_recursos # 0.5 dos recursos para Piltover
+else : 
+    calcula_taxa(populacao_piltover, populacao_zaun)
+
+mensagem()
+distribuir_recursos(recursos_zaun, recursos_piltover)
+
+if distribuicao_recursos >= 0.9 :
+    print ("Zaun receberá uma bolada!!!")
+elif 0.8 < distribuicao_recursos < 0.9 :
+    print ("Quase que Piltover ficava sem nada, pobrezinhos...")
+elif 0.7 < distribuicao_recursos < 0.8 :
+    print ("O negócio vai ficar bom para Zaun hein.")
+elif 0.6 < distribuicao_recursos < 0.7 :
+    print ("Parece que Zaun ainda precisa de ajuda.")
+elif 0.5 < distribuicao_recursos < 0.6 :
+    print ("As coisas estão meio apertadas para Zaun.")
+elif distribuicao_recursos < 0.5 :
+    print ("A situação não está muito favorável para Zaun...")
