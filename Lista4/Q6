@@ -1,0 +1,87 @@
+cadeias_aceitas = 0
+
+# Realiza o processamento de uma cadeia e a leitura dos seus símbolos
+def processamento_cadeia(cadeia_binaria, estado_inicial, estado_aceitacao, transicoes) :
+    global cadeias_aceitas
+    lista_bits = ["0", "1"]
+    sequencia = [estado_inicial]
+
+    # Caso a entrada seja uma cadeia vazia (ε)
+    if cadeia_binaria == "ε" :
+        global cadeias_aceitas
+        if estado_inicial == estado_aceitacao: # ACEITA
+            cadeias_aceitas += 1
+            print("Caramba, essa cadeia é abençoada! Nem precisei trabalhar!")
+        else: # REJEITADA
+            print("Nossa, que maldição! Nem começou e já deu errado…")
+        print(f"{{{estado_inicial}}}")
+        return
+
+    automato = int(estado_inicial[1:]) - 1
+    for bit in cadeia_binaria :
+        # Caso a entrada contenha algum elemento DIFERENTE de um bit
+        if bit not in lista_bits: #REJEITADA
+            print(f"Só pode estar de brincadeira comigo! Como vou lidar com {bit} dentro da máquina?")
+            print(f"{{{' -> '.join(sequencia)} -> ERROR}}")
+            return
+
+        # Caso NÃO houver algum elemento diferente de um bit
+        if bit == "0":
+            automato = int(transicoes[automato][0][1:]) - 1
+        elif bit == "1":
+            automato = int(transicoes[automato][1][1:]) - 1
+
+
+        if f"q{automato + 1}" != sequencia[-1]:
+            sequencia.append(f"q{automato + 1}")
+
+    if f"q{automato + 1}" == estado_aceitacao: #ACEITA
+        cadeias_aceitas += 1
+        print("Beleza! Após suar muito a cadeia foi aceita, o esforço ta sendo compensado!")
+    else: #REJEITADA
+        print("Que tristeza, todo esse arrudeio pra nada…")
+    print(f"{{{' -> '.join(sequencia)}}}")
+
+# Registra as conexões de cada estado do autômato
+def conexoes_estado(quant_estados):
+    transicoes = []
+    for _ in range(quant_estados):
+        conexoes = input().split(', ')
+        temp = [conexoes[0].split(' - ')[1], conexoes[1].split(' - ')[1]]
+        transicoes.append(temp)
+    return transicoes  
+
+# Imprime as conexões existentes entre cada estado do autômato
+def imprime_conexoes(quant_estados, transicoes):
+    for i in range(quant_estados):
+        print(f"q{i+1}: {{0 -> {transicoes[i][0]}, 1 -> {transicoes[i][1]}}}")
+
+quant_estados = int(input())
+
+if quant_estados == 1:
+    print("É… acho que não tem muito o que fazer com apenas uma dimensão, vou ter que me contentar com minha triste realidade :(")
+else:
+    # Recebimento do estado de aceitação
+    estado_aceitacao = input()
+
+    transicoes = conexoes_estado(quant_estados)
+    imprime_conexoes(quant_estados, transicoes)
+     
+    quant_cadeias_binarias = int(input())
+    for j in range(1, quant_cadeias_binarias + 1):
+        cadeia_binaria = input()
+        estado_inicial = input()
+
+        processamento_cadeia(cadeia_binaria, estado_inicial, estado_aceitacao, transicoes)
+
+    porcentagem_aceita = (cadeias_aceitas / quant_cadeias_binarias) * 100
+    if porcentagem_aceita == 100:
+        print("Sensacional :)! Com certeza vamos voltar pra casa com esse autômato, até Alan Turing teria inveja!")
+    elif porcentagem_aceita >= 75:
+        print("Show de bola! Se fizermos alguns ajustes nesse autômato, temos muitas chances de voltar pra casa!")
+    elif porcentagem_aceita >= 50:
+        print("Até que esse autômato da pro gasto, mas vamos precisar de uns bons ajustes…")
+    elif porcentagem_aceita >= 25:
+        print("Nossa, que situação horrível, não faço a mínima ideia de como concertar esse autômato")
+    else:
+        print("Nossas expectativas já eram baixas, mas não sabia que seria tão catastrófico assim :/")
