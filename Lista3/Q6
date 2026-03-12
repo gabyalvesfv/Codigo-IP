@@ -1,0 +1,79 @@
+lista_nome = []
+vencedores = []
+lista_nivel = []
+niv_vencedores = []
+
+rodadas = 1
+
+vencedor_autom = ''
+nivel_autom = 0
+
+num_feiticeiros = int(input())
+
+for i in range (1, num_feiticeiros + 1) :
+    nome = input()
+    nivel = int(input())
+
+    lista_nivel.append(nivel) 
+    lista_nome.append(nome)
+
+# pernanece rodando ate so sobrar 1 feiticeiro 
+while len(lista_nome) > 1 : 
+    vencedores = []
+    niv_vencedores = []
+
+    vencedor_autom = ''
+    nivel_autom = 0
+
+    print (f"\n--- Rodada {rodadas} ---")
+
+    # Caso tenha um número ímpar
+    if len(lista_nome) % 2 != 0:
+        vencedor_autom = lista_nome.pop()
+        nivel_autom = lista_nivel.pop()
+
+    # Caso tenha um número par 
+    if len(lista_nome) % 2 == 0: 
+        for r in range (0, len(lista_nome), 2) :
+            nome1 = lista_nome[r]
+            nome2 = lista_nome[r+1]
+            nivel1 = lista_nivel [r]
+            nivel2 = lista_nivel [r+1]
+            print (f"Confronto: {nome1} vs {nome2}")
+
+            # Caso de empate ou o primeiro vencer 
+            if nivel1 > nivel2 or nivel1 == nivel2:
+                vencedor = nome1 
+                niv_vencedor = nivel1
+                vencedores.append(vencedor)
+                niv_vencedores.append(niv_vencedor)
+                print (f"{vencedor} vence!")
+
+            # Caso o segundo vença 
+            elif nivel1 < nivel2 :
+                vencedor = nome2
+                niv_vencedor = nivel2
+                vencedores.append(vencedor)
+                niv_vencedores.append(niv_vencedor)
+                print (f"{vencedor} vence!")
+
+    if vencedor_autom != '' and nivel_autom != 0 :
+        vencedores.append(vencedor_autom)
+        niv_vencedores.append(nivel_autom)
+        print (f"{vencedor_autom} avança automaticamente!")
+
+
+    rodadas += 1       
+    
+    lista_nome = vencedores 
+    lista_nivel = niv_vencedores 
+
+print (f"\nO campeão do torneio é {vencedor} com nível de energia amaldiçoada {niv_vencedor}!")
+
+# Se o Itadori for o vencedor 
+if vencedor == "Itadori" and niv_vencedor > 90 :
+    print ("\n### Nas sombras da alma de Itadori, Sukuna desperta e toma o controle! ###")
+    print ("Uma aura de destruição toma conta, não há escapatória.")
+    print ("Com um riso diabólico, ele manifesta sua Expansão de Domínio: Fukuma Mizushi!")
+elif vencedor == "Itadori" and niv_vencedor <= 90 :
+    print ("\nItadori vence com honra e bravura!")
