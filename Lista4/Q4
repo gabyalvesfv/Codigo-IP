@@ -1,0 +1,85 @@
+alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+lista_descriptografada = []
+lista_alvo = []
+lista_dano = []
+lista_temp = []
+lista_secundaria = []
+lista_alvos_final = []
+lista_danos_final = []
+
+# Descriptografa a palavra usando a Cifra de César
+def formula_descriptografada() :
+    global lista_descriptografada, deslocamento_cifra
+    lista_descriptografada = []
+    deslocamento_cifra = deslocamento_cifra % 26
+    for k in formula_criptografada :
+        if k in alfabeto :
+            lista_descriptografada.append(alfabeto[(alfabeto.index(k) - deslocamento_cifra) % 26])  
+    lista_descriptografada = ''.join(lista_descriptografada)
+
+# Calcula o dano 
+def calculo_dano(precisao, resistencia, poder_explosao) :
+    global dano
+    if lista_descriptografada == "BAIXO" :
+        fator = 1
+    elif lista_descriptografada == "MEDIO" :
+        fator = 1.5
+    elif lista_descriptografada == "ALTO" :
+        fator = 2
+    dano = precisao * (poder_explosao / resistencia) * fator
+    dano = round(dano)
+
+# ordena de modo decrescente os danos e seus respectivos alvos 
+def ordem_ataques() :
+    global lista_temp, lista_alvo, lista_dano, lista_secundaria, lista_alvos_final, lista_danos_final
+    for m in range (numero_ataques) : 
+        lista_temp.append(lista_dano[m])
+        lista_temp.append(lista_alvo[m])
+        lista_secundaria.append(lista_temp)
+        lista_temp = []
+    lista_secundaria.sort(reverse=True)
+    idx_dano = 0
+    idx_alvo = 1
+
+    for n in range (numero_ataques) :
+        lista_alvos_final.append(lista_secundaria[n][idx_alvo])
+        lista_danos_final.append(lista_secundaria[n][idx_dano])
+       
+
+numero_ataques = int(input())
+
+if numero_ataques == 0 :
+    print ("Piltover em paz... por enquanto.")
+else :
+    for i in range (numero_ataques) :
+        nome_alvo, precisao, resistencia, poder_explosao, formula_criptografada, deslocamento_cifra = input().split(", ")
+        
+        # Conversão para int 
+        precisao = int(precisao)
+        resistencia = int(resistencia)  
+        poder_explosao = int(poder_explosao)
+        deslocamento_cifra = int(deslocamento_cifra)
+
+        formula_descriptografada()
+        calculo_dano(precisao, resistencia, poder_explosao)
+
+        lista_alvo.append(nome_alvo)
+        lista_dano.append(dano)
+
+        print (f"Decifrando: {lista_descriptografada}")
+        print (f"{nome_alvo}: {dano:.0f} de dano calculado.")
+
+        if dano >= 100 :
+            print (f"{nome_alvo} será destruído!")
+        else :
+            print (f"{nome_alvo} resistirá ao ataque.")
+
+        print ("")
+
+    ordem_ataques()
+
+    print ("Prioridade de ataques:")
+    for k in range (numero_ataques) :
+        print (f"{lista_alvos_final[k]} - {lista_danos_final[k]} de dano")
+
