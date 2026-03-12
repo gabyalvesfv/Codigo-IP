@@ -1,0 +1,40 @@
+membros = int(input())
+
+filmes_br = 0 
+filmes_outros = 0
+nota = 0
+soma_pontos = 0 
+
+print ("MARATONA DE NATAL: PAVÊ, RABANADA E FILMES")
+
+filme = input()
+
+while filme != "chega de filmes por hoje" :
+    nacionalidade = input()
+    if "natal" in filme.lower() or "papai noel" in filme.lower() or "magia" in filme.lower():
+
+        if nacionalidade.lower() == "brasil" or nacionalidade.lower() == "br" :
+            filmes_br += 1
+
+            for i in range(0, membros):
+                nota = int(input())
+                soma_pontos += nota 
+            print (f"{filmes_br}º filme: {filme}")
+            media = soma_pontos / membros 
+            print (f"Média de votos para '{filme}': {media:.1f}")
+
+        elif nacionalidade.lower() != "brasil" or nacionalidade.lower() != "br" :
+            filmes_outros += 1 
+
+    filme = input()
+    soma_pontos = 0 
+   
+
+print (f"{filmes_br} Filmes BR X {filmes_outros} Filmes FORA")
+
+if filmes_br == 0 :
+    print ("Infelizmente esse ano não será nem pa vê e nem pa comer, sua lista não possui um filme bom, ops… nacional")
+elif filmes_br == 1 :
+    print ("De toda sua lista, apenas UM filme de natal é nacional, melhore suas escolhas e tente novamente!")
+elif filmes_br > 1 :
+    print ("A ceia está servida? Porque aqui estão os filmes brasileiros que vão dar o toque especial da sua maratona no Natal!")
