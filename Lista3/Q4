@@ -1,0 +1,88 @@
+tipo_item = ''
+nome = ''
+classificacao = 0
+
+# lista de objetos
+obj_nivel_4 = []
+obj_nivel_3 = []
+obj_nivel_2 = []
+obj_nivel_1 = []
+obj_especial = []
+
+# listas de armas 
+arm_nivel_4 = []
+arm_nivel_3 = []
+arm_nivel_2 = []
+arm_nivel_1 = []
+arm_especial = []
+
+
+while tipo_item != "Catalogação encerrada!" :
+    tipo_item = input()
+
+    if tipo_item != "Catalogação encerrada!": # para evitar EOF
+        nome_classificacao = input()
+        nome , classificacao = nome_classificacao.split(" - ")
+        classificacao = int(classificacao)
+
+        # classificacao dos objetos de acordo com seu nivel 
+        if tipo_item == "Objeto" or tipo_item == "objeto" :
+            if classificacao == 4 :
+                obj_nivel_4.append(nome)
+            elif classificacao == 3:
+                obj_nivel_3.append(nome)
+            elif classificacao == 2 :
+                obj_nivel_2.append(nome)
+            elif classificacao == 1 :
+                obj_nivel_1.append(nome)
+            elif classificacao == 0 :
+                obj_especial.append(nome)
+            print (f"O objeto {nome} foi catalogado com sucesso!")
+
+        # classificacao das armas de acordo com seu nivel 
+        elif tipo_item == "Arma" or tipo_item == "arma" :
+            if classificacao == 4 :
+                arm_nivel_4.append(nome)
+            elif classificacao == 3:
+                arm_nivel_3.append(nome)
+            elif classificacao == 2 :
+                arm_nivel_2.append(nome)
+            elif classificacao == 1 :
+                arm_nivel_1.append(nome)
+            elif classificacao == 0 :
+                arm_especial.append(nome)
+            print (f"A arma {nome} foi catalogada com sucesso!")
+    
+
+print ("Processando lista de itens…")
+print ("")
+print ("ITENS AMALDIÇOADOS DA TOKYO JUJUTSU HIGH")
+print ("")
+print ("Objetos")
+
+# condição para entrar no output (lista precisa ter pelo menos um elemento)
+if len(obj_especial) != 0 :
+    print ("Categoria Especial:", ", ".join(obj_especial))
+if len(obj_nivel_1) != 0 :
+    print("Nível 1:", ", ".join(obj_nivel_1))
+if len(obj_nivel_2) != 0 :
+    print("Nível 2:", ", ".join(obj_nivel_2))
+if len(obj_nivel_3) != 0 :
+    print("Nível 3:", ", ".join(obj_nivel_3))
+if len(obj_nivel_4) != 0 :
+    print("Nível 4:", ", ".join(obj_nivel_4))
+
+print ("")
+print ("Armas")
+
+# condição para entrar no output (lista precisa ter pelo menos um elemento)
+if len(arm_especial) != 0 :
+    print ("Categoria Especial:", ", ".join(arm_especial))
+if len(arm_nivel_1) != 0 :
+    print("Nível 1:", ", ".join(arm_nivel_1))
+if len(arm_nivel_2) != 0 :
+    print("Nível 2:", ", ".join(arm_nivel_2))
+if len(arm_nivel_3) != 0 :
+    print("Nível 3:", ", ".join(arm_nivel_3))
+if len(arm_nivel_4) != 0 :
+    print("Nível 4:", ", ".join(arm_nivel_4))
