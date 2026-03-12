@@ -1,0 +1,43 @@
+def sequencia_penguinacci(numero, x=0, y=1) :
+    # Caso base
+    if x == numero :
+        return True
+    # Caso base
+    if x > numero :
+        return False
+    # Passo recursivo 
+    return sequencia_penguinacci(numero, y, x + y)
+
+quant_numero = int(input())
+
+# Lista pra colocar os números do input
+lista_numero = []
+
+for i in range(quant_numero) :
+    numero = int(input())
+    lista_numero.append(numero)
+
+# Lista para armazenar os números da sequência de Penguinacci
+lista_penguinacci = []
+
+# Verifica se o número pertence à sequência e adicona ele na lista final caso pertencer 
+for numero in lista_numero :
+    if sequencia_penguinacci(numero) and numero not in lista_penguinacci :
+        lista_penguinacci.append(numero)
+
+print(f"Contei um total de {len(lista_penguinacci)} números que estão na sequência de penguinacci!")
+
+if len(lista_penguinacci) == len(lista_numero) :
+    print("Boa, Paulo! Todos esses números fazem parte da sequência de penguinacci.")
+elif len(lista_penguinacci) > 0 :
+    lista_penguinacci.sort()
+    print("Eita, nem todos que você falou fazem parte da sequência de penguinacci. Os que fazem parte são:")
+    
+    lista_penguinacci_str = []
+
+    for num in lista_penguinacci :
+        num = str(num)
+        lista_penguinacci_str.append(num)
+    print(", ".join(lista_penguinacci_str))
+else:
+    print("Acho que é melhor revisar a teoria um pouco...")
