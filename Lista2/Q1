@@ -1,0 +1,48 @@
+entrada = ''
+
+bicicleta = 0
+videogame = 0 
+boneco = 0 
+outros = 0
+
+
+while entrada != "FIM" :
+    entrada = input()
+    if entrada == "Boneco" or entrada == "Videogame" or entrada == "Bicicleta" : 
+        print ("Mais um presente saindo!")
+        if entrada == "Boneco" :
+            boneco += 1 
+        elif entrada == "Videogame" :
+            videogame += 1 
+        elif entrada == "Bicicleta" :
+            bicicleta += 1 
+    elif  entrada != "Boneco" and entrada != "Videogame" and entrada != "Bicicleta" and entrada != "FIM" :
+        print ("Esse presente não está sendo fabricado nesse momento")
+        outros += 1
+else :
+    print ("Vamos agora ao relatório dos presentes!\n")
+
+total = bicicleta + videogame + boneco + outros
+porc_bicicleta = (bicicleta / total) * 100
+porc_videogame = (videogame / total) * 100
+porc_boneco = (boneco / total) * 100
+porc_outros = (outros / total) * 100
+
+print (f"Boneco - {boneco} unidades - {porc_boneco:.2f}%")
+print (f"Videogame - {videogame} unidades - {porc_videogame:.2f}%")
+print (f"Bicicleta - {bicicleta} unidades - {porc_bicicleta:.2f}%")
+print (f"Outros - {outros} unidades - {porc_outros:.2f}%")
+
+if porc_outros == 0.00 :
+    print ("A demanda está muito alta! Teremos que fazer mais uma fábrica!")
+elif porc_outros > 50.00 :
+    print ("Parece que o Papai Noel terá que fechar a fábrica :(")
+elif porc_outros <= 50.00 and porc_bicicleta <= 50.00 and porc_videogame <= 50.00 and porc_boneco <= 50.00 :
+    print ("A fábrica está cumprindo seu papel, porém não precisa ser expandida")
+elif porc_bicicleta > 50.00 :
+    print ("Bicicleta está sendo muito desejado! A fábrica terá que ser expandida!")
+elif porc_videogame > 50.00 :
+    print ("Videogame está sendo muito desejado! A fábrica terá que ser expandida!")
+elif porc_boneco > 50.00 :
+    print ("Boneco está sendo muito desejado! A fábrica terá que ser expandida!")
+    
