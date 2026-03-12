@@ -1,0 +1,59 @@
+musica = ''
+ultima_musica = ''
+
+quant_musica = 0
+ataques = 0
+acabou = False 
+
+print ("PLAYLIST DO PAPAI NOEL")
+
+while not acabou :
+    musica = input()
+    if musica == "FIM" :
+        acabou = True
+    else :
+        musica_nova = musica.replace (" ", "") 
+        musica.isalpha()
+        musica.isnumeric()
+        if len(musica_nova) >= 15 :
+            if musica_nova.isalpha() :
+                print (f"{musica} foi adicionada à playlist!")
+                ultima_musica = musica 
+                quant_musica += 1 
+            elif ((not musica_nova.isalpha()) and (not musica_nova.isnumeric())) :
+                if quant_musica != 0 :
+                    print (f"{musica} não pôde ser adicionada à playlist! A última música adicionada foi {ultima_musica}.")
+                else :
+                    print (f"{musica} não pôde ser adicionada e a playlist continua vazia. Papai Noel precisa da sua ajuda!")
+            elif musica_nova.isnumeric() :
+                ataques += 1 
+                if ataques < 3 :
+                    print ("ABORTAR! OS VILÕES OBTIVERAM ACESSO, TEREMOS QUE RECOMEÇAR.")
+                    print ("PLAYLIST DO PAPAI NOEL")
+                    quant_musica = 0
+                elif ataques == 3 :
+                    print ("NAAÃO! Já está na hora do Papai Noel sair e não conseguimos construir sua playlist perfeita.")
+                    musica = "FIM"
+                    acabou = True
+        elif len(musica_nova) < 15 :
+            if ((musica_nova.isalpha()) and (not musica_nova.isnumeric())) :
+                if quant_musica != 0 :
+                    print (f"{musica} não pôde ser adicionada à playlist! A última música adicionada foi {ultima_musica}.")
+                else :
+                    print (f"{musica} não pôde ser adicionada e a playlist continua vazia. Papai Noel precisa da sua ajuda!")
+            elif musica_nova.isnumeric() and (not musica_nova.isalpha()):
+                ataques += 1 
+                if ataques < 3 :
+                    print ("ABORTAR! OS VILÕES OBTIVERAM ACESSO, TEREMOS QUE RECOMEÇAR.")
+                    print ("PLAYLIST DO PAPAI NOEL")
+                    quant_musica = 0
+                elif ataques == 3 :
+                    print ("NAAÃO! Já está na hora do Papai Noel sair e não conseguimos construir sua playlist perfeita.")
+                    musica = "FIM"
+                    acabou = True
+else :
+    if ataques != 3 :
+        if quant_musica != 0 :
+            print (f"Ufa! Conseguimos criar a playlist perfeita, tomara que o Papai Noel goste das {quant_musica} músicas.")
+        else :
+            print ("Infelizmente não conseguimos encontrar nenhuma música para a playlist do Papai Noel...")
