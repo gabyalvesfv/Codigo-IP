@@ -1,0 +1,33 @@
+tf1 = float(input())
+tv1 = float(input())
+tf2 = float(input())
+tv2 = float(input())
+
+mlr_empresa = ''
+
+if tf1 < tf2 and tv1 <= tv2 :
+    mlr_empresa = 'Empresa 1'
+    print(f"A {mlr_empresa} é sempre a melhor opção!")
+elif tf1 <= tf2 and tv1 < tv2 :
+    mlr_empresa = 'Empresa 1'
+    print(f"A {mlr_empresa} é sempre a melhor opção!")
+elif tf1 > tf2 and tv1 >= tv2 :
+    mlr_empresa = 'Empresa 2'
+    print(f"A {mlr_empresa} é sempre a melhor opção!")
+elif tf1 >= tf2 and tv1 > tv2 :
+    mlr_empresa = 'Empresa 2'
+    print(f"A {mlr_empresa} é sempre a melhor opção!")
+elif tv1 == tv2 and tf1 == tf2 :
+    print("As duas empresas possuem o mesmo preço sempre!")
+else :
+    empresa_x = ''
+    empresa_y = ''
+    k = (tf1 - tf2) / (tv2 - tv1)
+    if tf1 > tf2 and tv2 > tv1:
+        empresa_x = "Empresa 2"
+        empresa_y = "Empresa 1"
+        print (f"{empresa_x} é mais barata para distâncias menores que {k:.2f} km, ambas têm o mesmo preço para {k:.2f} km e a {empresa_y} é mais barata para distâncias maiores que {k:.2f} km.")
+    elif tf1 < tf2 and tv2 < tv1 :
+        empresa_x = "Empresa 1"
+        empresa_y = "Empresa 2"
+        print (f"{empresa_x} é mais barata para distâncias menores que {k:.2f} km, ambas têm o mesmo preço para {k:.2f} km e a {empresa_y} é mais barata para distâncias maiores que {k:.2f} km.")
