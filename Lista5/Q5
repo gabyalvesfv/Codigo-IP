@@ -1,0 +1,61 @@
+def busca_palavra(matriz, tam_matriz, palavra, direcoes, a, b, idx) :
+    # Caso base (quando a palavra for toda encontrada)
+    if idx == len(palavra) :
+        return True
+    
+    # Caso o 'a' não estejas nos limites da matriz
+    if a < 0 or a >= tam_matriz:
+        return False
+    # Caso o 'b' não estejas nos limites da matriz
+    if b < 0 or b >= tam_matriz:
+        return False
+    # Caso a letra da matriz seja diferente da letra da palavra 
+    if matriz[a][b] != palavra[idx]:
+        return False
+    
+    #  Busca a palavra nas 8 direções possiveis se as direções a e b forem possiveis 
+    for direcao_a, direcao_b in direcoes :
+        if busca_palavra(matriz, tam_matriz, palavra, direcoes, a + direcao_a, b + direcao_b, idx + 1) :
+            return True
+    
+    # Caso a palavra não seja encontrada
+    return False
+
+def definicao_lugar(matriz, tam_matriz) :
+    # 8 direções possíveis (cima, baixo, direita, esquerda e diagonais)
+    direcoes = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
+    lugares = ["PENGUINBAR", "PRAIAGELADA", "PENGUICUPSTADIUM", "DELEGACIAPOLAR", "SUBZEROWAY", "FRIODEJANEIRO"]
+    
+    # Verifica as posiçôes na matriz
+    for palavra in lugares :
+        for i in range(tam_matriz) :
+            for j in range(tam_matriz) :
+                # Checa se a primeira letra coincide
+                if matriz[i][j] == palavra[0]:  
+                    if busca_palavra(matriz, tam_matriz, palavra, direcoes, i, j, 0):
+                        if palavra == "DELEGACIAPOLAR":
+                            return "Se formos até a Delegacia Polar, estaremos mexendo com um fora da lei. Vamos até lá investigar!"
+                        elif palavra == "FRIODEJANEIRO":
+                            return "ARRGH! Todos sabem que o melhor carnaval é no bloco Pinguim da Madrugada. Vamos buscar nossa estátua no Frio de Janeiro"
+                        elif palavra == "PENGUINBAR":
+                            return "Temos que correr! O Pinguim da Madrugada pode estar no(a) Penguin Bar. Vamos salvar nosso Carnaval de Inverno!"
+                        elif palavra == "PRAIAGELADA":
+                            return "Temos que correr! O Pinguim da Madrugada pode estar no(a) Praia Gelada. Vamos salvar nosso Carnaval de Inverno!"
+                        elif palavra == "PENGUICUPSTADIUM":
+                            return "Temos que correr! O Pinguim da Madrugada pode estar no(a) PenguiCup Stadium. Vamos salvar nosso Carnaval de Inverno!"
+                        elif palavra == "SUBZEROWAY":
+                            return "Temos que correr! O Pinguim da Madrugada pode estar no(a) SubzeroWay. Vamos salvar nosso Carnaval de Inverno!"
+       
+    
+    # Caso nenhuma palavra for encontrada
+    return "Nosso carnaval de inverno está perdido... NÃOOOOO"
+
+
+tam_matriz = int(input())  
+
+matriz = []
+for k in range(tam_matriz):
+    linha_matriz = input().split()
+    matriz.append(linha_matriz)
+
+print(definicao_lugar(matriz, tam_matriz))
