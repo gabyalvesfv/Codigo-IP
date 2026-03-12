@@ -1,0 +1,90 @@
+rodadas = int(input())
+
+pontos_equipe = 0
+pontos_duendes = 0
+pontos_elfos = 0
+dificil_duendes = 0
+dificil_elfos =0 
+
+print ("O Torneio de Natal começa agora! Que vençam os melhores!")
+
+for i in range (1, rodadas + 1) :
+    print (f"RODADA {i}")
+    nome_equipe = input()
+    desafio = input()
+    dificuldade = input()
+
+    if (desafio == "Prepararam as roupas do Papai Noel.") or (desafio == "Alimentaram as renas.") :
+        pontos_equipe += 10
+    elif (desafio == "Arrumaram os estoques de doces.") or (desafio == "Guardaram os presentes no trenó.") :
+        pontos_equipe += 20
+    elif (desafio == "Ajudaram a carregar os presentes.") or (desafio == "Embrulharam os presentes.") or (desafio == "Decoraram a árvore de Natal.") :
+        pontos_equipe += 30 
+    elif (desafio == "Planejaram a rota do Papai Noel.") :
+        pontos_equipe += 50 
+    elif (desafio == "Testaram os brinquedos.") :
+        brinquedos_testados = int(input())
+        pontos_equipe += brinquedos_testados * 2
+
+    if (dificuldade == "Médio") :
+       pontos_equipe =  pontos_equipe + (pontos_equipe * (1/5))
+    elif (dificuldade == "Difícil") :
+        pontos_equipe = pontos_equipe + (pontos_equipe * (1/2))
+
+    evento_surpresa = input()
+
+    if (evento_surpresa == "Dia de Sorte") :
+        pontos_equipe += 30 
+        print ("É um Dia de Sorte! Vocês ganharam 30 meias bônus!")
+        
+    elif (evento_surpresa == "Dia de Azar") :
+        pontos_equipe -= 30
+        print ("É um Dia de Azar! Vocês perderam 30 meias!")
+
+    elif (evento_surpresa == "Grinch") :
+        print ("O Grinch está sabotando o Torneio!")
+        cores_meias = ""
+        while (cores_meias != f"{nome_equipe}, protejam as meias!") :
+            if (cores_meias == "Amarelas") :
+                pontos_equipe -= 5
+            elif (cores_meias == "Verdes") :
+                pontos_equipe -= 10 
+            elif (cores_meias == "Vermelhas") :
+                pontos_equipe -= 20
+            cores_meias = input()
+    
+    else :
+        pontos_equipe += 0
+
+    if pontos_equipe < 0 :
+        pontos_equipe = 0
+
+    if (nome_equipe == "Duendes") :
+        pontos_duendes += pontos_equipe
+        if (dificuldade == "Difícil") :
+            dificil_duendes += 1
+    elif (nome_equipe == "Elfos") :
+        pontos_elfos += pontos_equipe
+        if (dificuldade == "Difícil") :
+            dificil_elfos += 1
+            
+    if pontos_equipe != 0 :
+        print (f"A equipe dos {nome_equipe} ganhou {pontos_equipe:.0f} meias nesta rodada.")
+    elif pontos_equipe == 0 :
+        print (f"Infelizmente, a equipe dos {nome_equipe} não ganhou meias nessa rodada.")
+
+    pontos_equipe = 0
+
+
+print ("TORNEIO ENCERRADO!")
+print ("Segurem seus gorros que o Noel já vai entregar o Prêmio da Estrela Natalina.")
+
+if (pontos_elfos > pontos_duendes):
+    print(f"Os Elfos venceram o Torneio de Natal com um total de {pontos_elfos:.0f} meias e terão a honra de ajudar o Papai Noel na noite mais mágica do ano.")
+elif (pontos_duendes > pontos_elfos) :
+    print (f"Os Duendes venceram o Torneio de Natal com um total de {pontos_duendes:.0f} meias e terão a honra de ajudar o Papai Noel na noite mais mágica do ano.")
+elif (pontos_duendes == pontos_elfos) :
+    if (dificil_elfos > dificil_duendes) : 
+        print(f"Os Elfos venceram o Torneio de Natal com um total de {pontos_elfos:.0f} meias e terão a honra de ajudar o Papai Noel na noite mais mágica do ano.")
+    elif (dificil_duendes > dificil_elfos) :
+        print(f"Os Duendes venceram o Torneio de Natal com um total de {pontos_duendes:.0f} meias e terão a honra de ajudar o Papai Noel na noite mais mágica do ano.")
