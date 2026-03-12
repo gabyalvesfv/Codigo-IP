@@ -1,0 +1,114 @@
+
+def calculo_derivada_recursiva(lista_polinomio, k):
+    # Caso base 
+    if k == 0:
+        return lista_polinomio  
+
+    lista_derivada = []
+
+    for lista_polinomio_separado in lista_polinomio :
+
+        # Se a sublista tiver dois elemntos significa que tem elevação
+        if len(lista_polinomio_separado) == 2 :
+            lista_polinomio_separado[0] = int(lista_polinomio_separado[0])
+            lista_polinomio_separado[1] = int(lista_polinomio_separado[1])
+            lista_polinomio_separado[0] = lista_polinomio_separado[0] * lista_polinomio_separado[1]
+            lista_polinomio_separado[1] -= 1
+
+            if lista_polinomio_separado[1] == 0 :
+                lista_derivada.append([lista_polinomio_separado[0]]) 
+            elif lista_polinomio_separado[1] == 1 :
+                lista_derivada.append([lista_polinomio_separado[0], '1'])  
+            else:
+                lista_derivada.append([lista_polinomio_separado[0], str(lista_polinomio_separado[1])])  
+
+        # Se a sublista tiver um elemntos significa que a elevação é 0
+        elif len(lista_polinomio_separado) == 1 :
+            continue # O número é removido
+
+    # Caso ainda tenha ordem para chamar, ela será chamada 
+    if k > 1 :
+        return calculo_derivada_recursiva(lista_derivada, k - 1)
+    
+    return lista_derivada
+
+
+def str_derivada(lista_polinomio) :
+    resultado = ''
+    contador = 0  
+
+    if len(lista_derivada) == 0 :
+        resultado = '0'
+        contador += 1
+
+    for lista_polinomio_separado in lista_polinomio :  
+        if len(lista_polinomio_separado) == 2 :
+            lista_polinomio_separado[0], lista_polinomio_separado[1] = lista_polinomio_separado
+
+            if lista_polinomio_separado[1] == "1" :
+                if contador == 0 :
+                    resultado += f"{lista_polinomio_separado[0]}x"
+                else:
+                    if int(lista_polinomio_separado[0]) > 0 :
+                        resultado += f"+{lista_polinomio_separado[0]}x"  
+                    elif int(lista_polinomio_separado[0]) < 0 :
+                        resultado += f"{lista_polinomio_separado[0]}x"  
+
+            else:
+                if contador == 0 :
+                    resultado += f"{lista_polinomio_separado[0]}x^{lista_polinomio_separado[1]}"
+                else:
+                    if int(lista_polinomio_separado[0]) > 0 :
+                        resultado += f"+{lista_polinomio_separado[0]}x^{lista_polinomio_separado[1]}"  
+                    elif int(lista_polinomio_separado[0]) < 0 :
+                        resultado += f"{lista_polinomio_separado[0]}x^{lista_polinomio_separado[1]}" 
+
+        elif len(lista_polinomio_separado) == 1 :
+            if contador == 0 :
+                resultado += f"{lista_polinomio_separado[0]}"  
+
+            else:
+                if int(lista_polinomio_separado[0]) > 0 :
+                    resultado += f"+{lista_polinomio_separado[0]}"  
+                elif int(lista_polinomio_separado[0]) < 0 :
+                    resultado += f"{lista_polinomio_separado[0]}"  
+
+        contador += 1
+
+    return resultado.strip()
+
+polinomio = input()
+polinomio_original = polinomio
+k = int(input())
+ordem = k 
+
+# Separa o polinômio de acordo com os sinais de - e +
+polinomio = polinomio.replace('-', ' -').replace('+', ' +')
+lista_polinomio = polinomio.split(' ')
+
+# Se o primeiro elemento da lista for vazio, ele desconsidera
+if lista_polinomio[0] == '' :
+    lista_polinomio.remove('')
+
+# Separa a expressão e cria sublistas usando como base o símbolo de elevado ^
+for i in range(len(lista_polinomio)) :
+    if "x^" in lista_polinomio[i] :
+        lista_polinomio[i] = lista_polinomio[i].split('x^')
+        if lista_polinomio[i][0] == '' :
+            lista_polinomio[i][0] = '1'
+    elif "x" in lista_polinomio[i]:
+        if lista_polinomio[i] == '-x' :
+            lista_polinomio[i] = ['-1', '1']
+        elif lista_polinomio[i] == 'x' :
+            lista_polinomio[i] = ['1', '1']
+        else :
+            lista_polinomio[i] = [lista_polinomio[i].replace('x', ''), '1']
+    else :
+        lista_polinomio[i] = [lista_polinomio[i]]  
+
+lista_derivada = calculo_derivada_recursiva(lista_polinomio, k)
+
+derivada = str_derivada(lista_derivada)
+
+print(f"A derivada de ordem {ordem} da função {polinomio_original} é:")
+print(f"{derivada}")
