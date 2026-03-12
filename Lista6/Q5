@@ -1,0 +1,90 @@
+# Cálculo da pontuação 
+def calcula_pontuacao(palavra_digitada, palavras_portugues) :
+    pontuacao = 0
+    # Compara a ordenada da palavra digitada com as demais palavras em português no dicionário
+    for i in range(min(len(palavra_digitada), len(palavras_portugues))) :
+        pontuacao += ord(palavra_digitada[i]) - ord(palavras_portugues[i])
+    return pontuacao
+
+def sistema_sugestoes(historico_palavras) :
+    palavras_historico = historico_palavras.split()[-4:]  
+    sugestoes = {}
+
+    pontuacao = 0
+
+    for palavra in dicionario :
+        pontuacao = 0
+
+        for palavra_digitada in palavras_historico:
+            pontuacao += calcula_pontuacao(palavra_digitada, palavra)
+        # Dicionário de suguestões com a palavra em português e sua respectiva pontuação
+        sugestoes[palavra] = pontuacao
+
+    # Ordena a lista de suguestões 
+    sugestoes_ordenadas = sorted(sugestoes.keys(), key=lambda x: sugestoes[x])
+    
+    return sugestoes_ordenadas[:4]
+
+dicionario = {}
+dicionario_add = {}
+texto = []
+texto_nativo = []
+ultima_sugestao = []
+
+while True :
+    comando_argumento = input().split(' ')
+    comando = comando_argumento[0]
+    if len(comando_argumento) > 1 :
+        argumento = comando_argumento[1]
+
+    if comando == "*FIM" :
+        break
+    else :
+        comando = comando_argumento[0]
+        if len(comando_argumento) > 1 :
+            argumento = comando_argumento[1]
+
+        if comando == "*ADD" :
+            palavra_traducao = argumento.split(':')
+            palavra = palavra_traducao[0]
+            traducao = palavra_traducao[1]
+            dicionario[palavra] = traducao
+            dicionario_add[traducao] = palavra
+
+        elif comando == "*DEL" :
+            palavra = argumento 
+            del dicionario[palavra]
+
+        elif comando == "*ESC" :
+            palavra = argumento 
+            texto.append(palavra)
+            texto_nativo.append(dicionario[palavra])
+
+        elif comando == "*SEL" :
+            numero = argumento 
+            numero = int(numero) - 1
+            if numero <= len(sugestoes_lista) :
+                sugestao = sugestoes_lista[numero]
+                texto.append(sugestoes_lista[numero])
+                texto_nativo.append(dicionario[sugestao])
+
+    # A partir do momento em que for adicionado uma palavra a lista texto ele vai fornecer as suguestões com base no cálculo de pontuação 
+    if texto :
+        ultimas_palavras = ' '.join(texto).split()[-4:]  
+        sugestoes_lista = sistema_sugestoes(' '.join(ultimas_palavras))
+
+        # Evita printar um print igual ao anterior (sem nenhuma alteração)
+        if sugestoes_lista != ultima_sugestao :
+            print(f"{' '.join(texto_nativo)} ({','.join(sugestoes_lista)})")
+            print("------------------")
+        elif comando == "*SEL" or comando == "*ESC" :
+            print(f"{' '.join(texto_nativo)} ({','.join(sugestoes_lista)})")
+            print("------------------")
+        if ultima_sugestao == [] :
+            ultima_sugestao = sugestoes_lista
+        elif ultima_sugestao != sugestoes_lista :
+            ultima_sugestao = sugestoes_lista
+
+if texto :
+    print (" ".join(texto))  
+    print (" ".join(texto_nativo))  
