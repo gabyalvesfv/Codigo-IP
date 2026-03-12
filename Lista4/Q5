@@ -1,0 +1,81 @@
+contador = 0 
+
+# Zap: qualquer distancia, causa 5 de dano e diminui a velocidade do alvo permanentemente em 1 (atravessa defesa, mas nao causa dano, apenas diminui a velocidade)
+def zap ():
+    global vida, velocidade
+    if defesa == 0 :
+        vida -= 5 
+        if velocidade > 1 :
+            velocidade -= 1
+        elif velocidade == 1 :
+            velocidade += 0
+        print ("Você foi zapeado hahaha.")
+    elif defesa == 1 :
+        if velocidade > 1 :
+            velocidade -= 1
+        elif velocidade == 1 :
+            velocidade += 0
+        print ("Ele está com defesa e está muito perto!")    
+
+# PowPow: causa 15 de dano, usado a 15 metros de distância ou mais (não é útil utilizá-la em casos onde há defesa)
+def powpow ():
+    global vida
+    vida -= 15
+    print ("Jinx vai encher esse cara de buracos agora.")
+
+# FishBones: causa 30 de dano, usado a 30 metros de distância ou mais (destroi defesa, mas nao causa dano)
+def fishbones () :
+    global vida, defesa
+    if defesa == 0 :
+        vida -= 30 
+        print ("Vamos derretê-lo com a Fishbones!")
+    elif defesa == 1 :
+        defesa = 0
+        print ("A defesa dele foi destruída com o poder da Fishbones!") 
+
+# Lança-Míssil: causa 100 de dano,  usado a 50 metros de distância ou mais e so pode ser usada 1 vez (nao atrvessa nem destroi defesa)
+def lanca_missil ():
+    global vida, contador, defesa
+    if contador < 1 :
+        vida -= 100
+        contador += 1
+        print ("Ele vai ser transformado em cinzas pelo SUPER MÍSSIL!")
+
+    
+def escolha_arma ():
+    global vida, distancia
+    if distancia >= 50 :
+        if defesa == 0 :
+            if contador == 0 :
+                lanca_missil()
+            elif contador > 0 :
+                fishbones()
+        elif defesa == 1 :
+            fishbones()
+    elif 30 <= distancia < 50 :
+        fishbones()
+    elif 15 <= distancia < 30 :
+        if defesa == 0 :
+            powpow()
+        elif defesa == 1 :
+            zap()
+    elif 1 <= distancia < 15 :
+        zap()
+
+informacoes = input().split(" - ")
+nome = informacoes[0]
+vida = int(informacoes[1])
+distancia = int(informacoes[2])
+velocidade = int(informacoes[3])
+defesa = int(informacoes[4])
+
+print (f"Andando pelas ruas de Zaun, jinx dá de cara com um {nome} e agora vão lutar.")
+
+while distancia > 0 and vida > 0 :
+    escolha_arma()
+    distancia -= velocidade
+
+if distancia <= 0 :
+    print ("Ah não, A Jinx foi PEGA!")
+elif vida <= 0 :
+    print ("Ninguem é capaz de derrotar a Jinx!!!")
