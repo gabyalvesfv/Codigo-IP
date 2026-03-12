@@ -1,0 +1,49 @@
+nome = str(input())
+q_partidas = int(input())
+q_gols = int(input())
+q_assistencias = int(input())
+q_desarmes = int(input())
+liga = str(input())
+
+pontos_gol = q_gols * 2
+pontos_assistencias = q_assistencias
+pontos_desarme = q_desarmes * 0.4
+pontos_total = pontos_gol + pontos_assistencias + pontos_desarme
+score = pontos_total * 1
+
+# Formação score
+if liga == "Premier League" :
+    score = pontos_total * 1
+elif liga == "La Liga" :
+    score = pontos_total * 0.95
+elif liga == "Serie A" :
+    score = pontos_total * 0.9 
+elif liga == "Brasileirão" :
+    score = pontos_total * 0.8
+
+# Aprovação dos critérios
+if liga == "Premier League" or liga == "La Liga" or liga == "Serie A" or liga == "Brasileirão" :
+    if q_gols / q_partidas < 0.3 :
+        print("O jogador está fora, não possui a média de gols necessária.")
+    elif q_gols / q_partidas >= 0.3 :
+
+        if q_assistencias / q_partidas < 0.15 :
+            print("Infelizmente não teve assistências o suficiente, portanto não concorre ao prêmio.")
+        elif q_assistencias / q_partidas >= 0.15 :
+
+            if q_desarmes / q_partidas < 1.25 :
+                print(f"{nome} não desarmou jogadores o suficiente, portanto está fora.")
+            elif q_desarmes / q_partidas >= 1.25 :
+
+                if q_partidas < 50 :
+                    print("O atleta não jogou partidas o suficiente para concorrer à premiação.")
+                elif q_partidas >= 50 :
+
+                    if score >= 80 :
+                        print (f"Promissor! {nome} é um potencial ganhador da Bola de Ouro!")
+                    elif 70 <= score < 80 :
+                        print (f"{nome} tem chances médias de ganhar o prêmio.")
+                    elif score < 70 :
+                        print (f"{nome} dificilmente ganhará a premiação, apesar de ser apto.")
+elif liga != "Premier League" or liga != "La Liga" or liga != "Serie A" or liga != "Brasileirão" :
+    print("A liga informada não é válida ou o jogador não pertence a nenhuma das ligas elegíveis para a premiação.")
