@@ -1,0 +1,74 @@
+pontuacao_legado = {"Zumbi dos Palmares": 1000,
+"Frei Caneca": 900,
+"Paulo Freire": 800,
+"Clarice Lispector": 800,
+"Ariano Suassuna": 700,
+"Chico Science": 600,
+"Luiz Gonzaga": 500,
+"Eduardo Campos": 400,
+"Rivaldo": 300,
+"Lia de Itamaracá": 200}
+
+criterio_desempate = {"Revolucionário": 1,
+"Líder comunitário": 2, 
+"Cientista": 3,
+"Político": 4,
+"Escritor": 5,
+"Educador": 6,
+"Artista": 7,
+"Atleta": 8}
+
+num_bairros = int(input())
+
+pontuacao_impacto = {}
+relevancia = {}
+
+for figura in pontuacao_legado :
+    pontuacao_impacto[figura] = 0
+
+for i in range (num_bairros) :
+    bairro = input()
+    populacao = int(input())
+
+    # Formação do pódio do bairro
+    for posicao in range(1, 4) :  
+        figura_ramo = input().split(' - ')
+        figura = figura_ramo[0]
+        ramo = figura_ramo[1]
+        impacto = populacao // posicao  
+
+        # Atualiza o dicionário da pontuacao impacto  
+        pontuacao_impacto[figura] += impacto
+
+        relevancia[figura] = {"ramo": ramo}
+
+# Pontuação total
+pontuacao_total = {}
+for figura in pontuacao_legado :
+    pontuacao_total[figura] = pontuacao_impacto[figura] + pontuacao_legado[figura]
+
+# Vencedores em ordem decrescente 
+vencedores = sorted(pontuacao_total.items(), key=lambda item: item[1], reverse=True)
+
+vencedor_1, pontos_1 = vencedores[0][0], vencedores[0][1]
+vencedor_2, pontos_2 = vencedores[1][0], vencedores[1][1]
+
+# Caso de Empate 
+if pontos_1 == pontos_2 :
+    print (f"Temos um empate entre {vencedor_1} e {vencedor_2}, vamos usar os critérios de desempate para ver quem fica com o prêmio.")
+
+    ramo_1 = relevancia[vencedor_1]["ramo"]
+    ramo_2 = relevancia[vencedor_2]["ramo"]
+
+    # Quanto menor o índice, maior a relevância 
+    if criterio_desempate[ramo_1] < criterio_desempate[ramo_2] :
+        vencedor_1, vencedor_2 = vencedor_1, vencedor_2
+    elif criterio_desempate[ramo_1] > criterio_desempate[ramo_2] :
+        vencedor_1, vencedor_2 = vencedor_2, vencedor_1
+
+    print(f"Após utilizar os critérios de desempate, {vencedor_1} ficou com o prêmio.")
+
+
+print(f"1º: {vencedor_1} com {pontuacao_legado[vencedor_1]} pontos de legado, {pontuacao_impacto[vencedor_1]} pontos de impacto e {pontos_1} pontos totais")
+print(f"2º: {vencedor_2} com {pontuacao_legado[vencedor_2]} pontos de legado, {pontuacao_impacto[vencedor_2]} pontos de impacto e {pontos_2} pontos totais")
+
