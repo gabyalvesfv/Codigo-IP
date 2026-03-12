@@ -1,0 +1,148 @@
+# Calcula o tempo gasto para atravessar cada túnel
+def dist_manhattan(x1, y1, z1, x2, y2, z2) :
+    return abs(x2 - x1) + abs(y2 - y1) + abs(z2 - z1)
+
+def revisitar_iglu(caminho, iglu_atual, tempo_total, tunel_especial, puffle_flare_pego) :
+    # Define se é permitido revisitar
+    if puffle_flare_pego and (iglu_atual == tunel_especial[0] or iglu_atual == tunel_especial[1]) :
+        return True
+    return False
+
+def encontra_caminho(iglu_atual, iglu_seguro, tuneis, caminho, tempo_total, tempo_flare, tunel_especial, puffle_flare_pego = False, forcar_caminho = False) :
+    # Caminho encontrado
+    if iglu_atual == iglu_seguro :
+        if forcar_caminho and not puffle_flare_pego:
+            return [False, puffle_flare_pego, tempo_total, tempo_flare, []]
+        return [True, puffle_flare_pego, tempo_total, tempo_flare, caminho + [iglu_atual]]
+
+    # Se o iglu já foi visitado e não podemos revisitar, não continuamos
+    if iglu_atual in caminho and not revisitar_iglu(caminho, iglu_atual, tempo_total, tunel_especial, puffle_flare_pego) :
+        return [False, puffle_flare_pego, tempo_total, tempo_flare, []]
+
+    caminho.append(iglu_atual)
+
+    # Verifica os túneis que saem do iglu atual
+    for O, D, tempo_tunel in tuneis :
+        # Considera caminho O -> D ou D -> O
+        if O == iglu_atual:  # Direção O -> D
+            tempo_total_temp = tempo_total + tempo_tunel
+            tempo_flare_temp = tempo_flare
+
+            # Verifica se é o túnel especial
+            if (O == tunel_especial[0] and D == tunel_especial[1]) or (D == tunel_especial[0] and O == tunel_especial[1]) :
+                if puffle_flare_pego == False :
+                    tempo_flare_temp = tempo_total + tempo_tunel
+                puffle_flare_pego = True
+
+            encontrou, passou, tempo, tempo_flare, caminho_final = encontra_caminho(D, iglu_seguro, tuneis, caminho.copy(), tempo_total_temp, tempo_flare_temp, tunel_especial, puffle_flare_pego, forcar_caminho)
+
+            if encontrou:
+                return [True, passou, tempo, tempo_flare, caminho_final]
+
+        elif D == iglu_atual :  # Direção D -> O
+            tempo_total_temp = tempo_total + tempo_tunel
+            tempo_flare_temp = tempo_flare
+
+            # Verifica se é o túnel especial
+            if (O == tunel_especial[0] and D == tunel_especial[1]) or (D == tunel_especial[0] and O == tunel_especial[1]) :
+                if not puffle_flare_pego :
+                    tempo_flare_temp = tempo_total + tempo_tunel
+                puffle_flare_pego = True
+
+            encontrou, passou, tempo, tempo_flare, caminho_final = encontra_caminho(O, iglu_seguro, tuneis, caminho.copy(), tempo_total_temp, tempo_flare_temp, tunel_especial, puffle_flare_pego, forcar_caminho)
+
+            if encontrou:
+                return [True, passou, tempo, tempo_flare, caminho_final]
+
+    return [False, puffle_flare_pego, tempo_total, tempo_flare, []]
+
+def verifica_caminho(iglu_inicial, iglu_seguro, tuneis, tunel_especial, tempo_max, primeiro_puffle = True) :
+    caminho = []
+    tempo_total = 0
+    tempo_flare = 0
+
+    # Força o caminho pelo túnel especial se for o primeiro puffle
+    encontrou, puffle_flare_pego, tempo_total, tempo_flare, caminho_final = encontra_caminho(iglu_inicial, iglu_seguro, tuneis, caminho, tempo_total, tempo_flare, tunel_especial, not primeiro_puffle, primeiro_puffle)
+
+    if not encontrou :
+        return [False, tempo_total, tempo_flare, puffle_flare_pego, []]
+
+    if primeiro_puffle and not puffle_flare_pego :
+        return [False, tempo_total, tempo_flare, puffle_flare_pego, []]
+
+    if tempo_flare > tempo_max :
+        return [False, tempo_total, tempo_flare, puffle_flare_pego, []]
+
+    return [True, tempo_total, tempo_flare, puffle_flare_pego, caminho_final]
+
+def mover_tunel_especial(tuneis, tunel_especial) :
+    for i in range(len(tuneis)) :
+        O, D, tempo_tunel = tuneis[i]
+        if (O == tunel_especial[0] and D == tunel_especial[1]) or (D == tunel_especial[0] and O == tunel_especial[1]) :
+            # Remove o túnel especial da lista e coloca no final
+            tuneis.append(tuneis.pop(i))
+            break
+    return tuneis
+
+num_iglus, num_tuneis = input().split(', ')
+num_iglus = int(num_iglus)
+num_tuneis = int(num_tuneis)
+
+tuneis = []
+for i in range(num_tuneis) :
+    O, D = eval(input())  
+    tempo = dist_manhattan(O[0], O[1], O[2], D[0], D[1], D[2])
+    tuneis.append([O, D, tempo])
+
+tempo_max = int(input())
+origem_seguro = eval(input())  
+tunel_especial = eval(input())  
+
+tuneis = mover_tunel_especial(tuneis, tunel_especial)
+
+iglu_inicial = origem_seguro[0]
+iglu_seguro = origem_seguro[1]
+
+derrotados = 0
+
+# Verifica se existe um caminho para o primeiro puffle
+encontrou_primeiro, tempo_primeiro, tempo_flare, passou_flare, caminho_primeiro = verifica_caminho(iglu_inicial, iglu_seguro, tuneis, tunel_especial, tempo_max, primeiro_puffle = True)
+
+if not encontrou_primeiro :
+    if tempo_flare > tempo_max and tempo_flare != 0 :
+        print("Fomos derrotados... não foi possível escapar da erupção do vulcão!")
+    else :
+        encontrou_outros, tempo_outros, _, _, caminho_outros = verifica_caminho(iglu_inicial, iglu_seguro, tuneis, tunel_especial, tempo_max, primeiro_puffle = False)
+
+        if encontrou_outros and tempo_flare == 0 :
+            print("Não é possível capturar o Puffle Flare...")
+        else :
+            print ("Não há como escapar...")
+else :
+    print(f"Puffle Flare capturado no momento: {tempo_flare} unidades de tempo")
+
+    encontrou_outros, tempo_outros, _, _, caminho_outros = verifica_caminho(iglu_inicial, iglu_seguro, tuneis, tunel_especial, tempo_max, primeiro_puffle = False)
+
+    if tempo_primeiro <= tempo_max:
+        print("Missão bem sucedida!! Todos os puffles se salvaram.")
+
+    elif (tempo_outros > tempo_max and tempo_primeiro > tempo_max) or tempo_flare > tempo_max :
+        print("Fomos derrotados... não foi possível escapar da erupção do vulcão!")
+        derrotados += 1 
+
+    elif tempo_primeiro > tempo_max and tempo_flare <= tempo_max :
+        print("O primeiro puffle não conseguiu chegar lá...")
+
+    if encontrou_outros and derrotados == 0 :
+        if caminho_outros == caminho_primeiro or tempo_primeiro > tempo_max :
+            print("Caminho comum entre todos os puffles:")
+            print(" -> ".join(str(iglu) for iglu in caminho_outros) + f" ({tempo_outros} unidades de tempo)")
+
+        else :
+            if caminho_primeiro :
+                print("Caminho do primeiro puffle:")
+                print(" -> ".join(str(iglu) for iglu in caminho_primeiro) + f" ({tempo_primeiro} unidades de tempo)")
+
+            if caminho_outros :
+                print("Caminho dos outros puffles:")
+                print(" -> ".join(str(iglu) for iglu in caminho_outros) + f" ({tempo_outros} unidades de tempo)")
