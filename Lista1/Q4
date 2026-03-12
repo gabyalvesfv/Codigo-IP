@@ -1,0 +1,37 @@
+jurado_1_jogador = input()
+jurado_1_pais = input()
+jurado_2_jogador = input()
+jurado_2_pais = input()
+
+if jurado_1_jogador == "vinijr" and jurado_1_pais == "Brasil" or jurado_1_jogador == "rodri" and jurado_1_pais == "Espanha" :
+    print("Voto inválido! Não é permitido votar em jogadores do mesmo país.")
+else :
+    print("Voto registrado!") 
+
+if jurado_2_jogador == "vinijr" and jurado_2_pais == "Brasil" or jurado_2_jogador == "rodri" and jurado_2_pais == "Espanha" :
+    print("Voto inválido! Não é permitido votar em jogadores do mesmo país.")
+else :
+    print("Voto registrado!") 
+
+votos_rodri = 0
+votos_vinijr = 0
+
+# votos rodri 
+if jurado_1_jogador == "rodri" and jurado_1_pais == "Espanha" and jurado_2_jogador == "rodri" and jurado_2_pais == "Espanha" :
+    votos_rodri = 0
+elif jurado_1_jogador == "rodri" and jurado_1_pais != "Espanha" and jurado_2_jogador == "rodri" and jurado_2_pais != "Espanha" :
+    votos_rodri = 2
+elif jurado_1_jogador == "rodri" and jurado_1_pais != "Espanha" or jurado_2_jogador == "rodri" and jurado_2_pais != "Espanha" :
+    votos_rodri = 1
+
+#votos vinijr
+if jurado_1_jogador == "vinijr" and jurado_1_pais == "Brasil" and jurado_2_jogador == "vinijr" and jurado_2_pais == "Brasil" :
+    votos_vinijr = 0
+elif jurado_1_jogador == "vinijr" and jurado_1_pais != "Brasil" and jurado_2_jogador == "vinijr" and jurado_2_pais != "Brasil" :
+    votos_vinijr = 2
+elif jurado_1_jogador == "vinijr" and jurado_1_pais != "Brasil" or jurado_2_jogador == "vinijr" and jurado_2_pais != "Brasil" :
+    votos_vinijr = 1
+
+
+print (f"Votos válidos para rodri: {votos_rodri}")
+print(f"Votos válidos para vinijr: {votos_vinijr}")
