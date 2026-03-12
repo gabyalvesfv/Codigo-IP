@@ -1,0 +1,102 @@
+# jogador 1
+nome_jogador_1 = str(input())
+gols_1 = int(input())
+partidas_1 = int(input())
+velocidade_max_1 = float(input())
+
+# jogador 2
+nome_jogador_2 = str(input())
+gols_2 = int(input())
+partidas_2 = int(input())
+velocidade_max_2 = float(input())
+
+# jogador 3
+nome_jogador_3 = str(input())
+gols_3 = int(input())
+partidas_3 = int(input())
+velocidade_max_3 = float(input())
+
+
+# Cálculo ponderado 1
+pontuacao_1 = ((gols_1 * 5) + (partidas_1 * 2) + (velocidade_max_1 * 3)) / 10 + (len(nome_jogador_1) % 3)
+
+# Cálculo ponderado 2
+pontuacao_2 = ((gols_2 * 5) + (partidas_2 * 2) + (velocidade_max_2 * 3)) / 10 + (len(nome_jogador_2) % 3)
+
+# Cálculo ponderado 3
+pontuacao_3 = ((gols_3 * 5) + (partidas_3 * 2) + (velocidade_max_3 * 3)) / 10 + (len(nome_jogador_3) % 3)
+
+
+if pontuacao_1 != pontuacao_2 != pontuacao_3 :
+    if pontuacao_3 < pontuacao_2 < pontuacao_1 :
+        print (f"1 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print (f"2 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print (f"3 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print(f"{nome_jogador_1} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_1:.2f} pontos.")
+
+    elif pontuacao_2 < pontuacao_3 < pontuacao_1 :
+        print (f"1 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print (f"2 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"3 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print(f"{nome_jogador_1} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_1:.2f} pontos.")
+
+    elif pontuacao_3 < pontuacao_1 < pontuacao_2 :
+        print (f"1 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print (f"2 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print (f"3 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print(f"{nome_jogador_2} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_2:.2f} pontos.")
+
+    elif pontuacao_1 < pontuacao_3 < pontuacao_2 :
+        print (f"1 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print (f"2 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"3 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print(f"{nome_jogador_2} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_2:.2f} pontos.")
+
+    elif pontuacao_1 < pontuacao_2 < pontuacao_3 :
+        print (f"1 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"2 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print (f"3 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print(f"{nome_jogador_3} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_3:.2f} pontos.")
+
+    elif pontuacao_2 < pontuacao_1 < pontuacao_3 :
+        print (f"1 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"2 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print (f"3 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.") 
+        print(f"{nome_jogador_3} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_3:.2f} pontos.")
+
+else :
+    if len(nome_jogador_1) < len(nome_jogador_2) < len(nome_jogador_1) :
+         print (f"1 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+         print (f"2 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+         print (f"3 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+         print(f"{nome_jogador_1} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_1:.2f} pontos.")
+
+    elif len(nome_jogador_2) < len(nome_jogador_3) < len(nome_jogador_1) :
+        print (f"1 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print (f"2 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"3 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print(f"{nome_jogador_1} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_1:.2f} pontos.")
+
+    elif len(nome_jogador_3) < len(nome_jogador_1) < len(nome_jogador_2) :
+        print (f"1 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print (f"2 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print (f"3 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print(f"{nome_jogador_2} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_2:.2f} pontos.")
+
+    elif len(nome_jogador_1) < len(nome_jogador_3) < len(nome_jogador_2) :
+        print (f"1 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print (f"2 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"3 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print(f"{nome_jogador_2} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_2:.2f} pontos.")
+
+    elif len(nome_jogador_1) < len(nome_jogador_2) < len(nome_jogador_3) :
+        print (f"1 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"2 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.")
+        print (f"3 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print(f"{nome_jogador_3} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_3:.2f} pontos.")
+
+    elif len(nome_jogador_2) < len(nome_jogador_1) < len(nome_jogador_3) :
+        print (f"1 - {nome_jogador_3} obteve {pontuacao_3:.2f} pontos.")
+        print (f"2 - {nome_jogador_1} obteve {pontuacao_1:.2f} pontos.")
+        print (f"3 - {nome_jogador_2} obteve {pontuacao_2:.2f} pontos.") 
+        print(f"{nome_jogador_3} é o verdadeiro ganhador da Bola de Ouro com um total de {pontuacao_3:.2f} pontos.")
