@@ -1,0 +1,100 @@
+musica = " "
+streams = 0 
+
+musica1 = " "
+musica2 = " "
+musica3 = " "
+
+streams1 = 0
+streams2 = 0
+streams3 = 0
+
+primeiro = 0
+segundo = 0
+terceiro = 0
+
+primeira_m = " "
+segunda_m = " "
+terceira_m = " "
+
+for i in range(3):
+    musica = input()
+    streams = int(input())
+    if musica1 == " " :
+        musica1 = musica
+        streams1 = streams
+    elif musica2 == " ":
+        musica2 = musica
+        streams2 = streams
+    elif musica3 == " ":
+        musica3 = musica
+        streams3 = streams 
+
+if streams1 > streams2 and streams1 > streams3: 
+    primeiro = streams1 
+    primeira_m = musica1 
+
+    if streams2 > streams3: 
+        segundo = streams2 
+        terceiro = streams3 
+        segunda_m = musica2 
+        terceira_m = musica3 
+    elif streams3 > streams2 :
+        segundo = streams3 
+        terceiro = streams2 
+        segunda_m = musica3 
+        terceira_m = musica2 
+
+elif streams2 > streams1 and streams2 > streams3 :
+    primeiro = streams2
+    primeira_m = musica2
+
+    if streams1 > streams3 : 
+        segundo = streams1
+        terceiro = streams3 
+        segunda_m = musica1 
+        terceira_m = musica3 
+    elif streams3 > streams1 :
+        segundo = streams3 
+        terceiro = streams1
+        segunda_m = musica3 
+        terceira_m = musica1 
+
+elif streams3 > streams1 and streams3 > streams2 :
+    primeiro = streams3
+    primeira_m = musica3
+
+    if streams1 > streams2 : 
+        segundo = streams1
+        terceiro = streams2 
+        segunda_m = musica1 
+        terceira_m = musica2
+    elif streams2 > streams1 :
+        segundo = streams2 
+        terceiro = streams1
+        segunda_m = musica2
+        terceira_m = musica1 
+
+print (f"1º: {primeira_m} teve {primeiro} de streams e foi a música mais ouvida de Simone!")
+print (f"2º: {segunda_m} teve {segundo} de streams e foi a segunda música mais ouvida de Simone!")
+print (f"3º: {terceira_m} teve {terceiro} de streams e completou o top 3 das músicas mais ouvidas da artista!")
+
+if primeiro > 10000000 :
+    print (f"Uau! {primeira_m} foi um hit certeiro da rainha do Natal!")
+if segundo > 10000000 :
+    print (f"Uau! {segunda_m} foi um hit certeiro da rainha do Natal!")
+if terceiro > 10000000 :
+    print (f"Uau! {terceira_m} foi um hit certeiro da rainha do Natal!")
+
+if primeiro < 1000000 :
+    print (f"Bom… a música {primeira_m} não foi exatamente um sucesso nacional, mas foi o suficiente para entrar no topo da lista das mais ouvidas.")
+if segundo < 1000000 :
+    print (f"Bom… a música {segunda_m} não foi exatamente um sucesso nacional, mas foi o suficiente para entrar no topo da lista das mais ouvidas.")
+if terceiro < 1000000 :
+    print (f"Bom… a música {terceira_m} não foi exatamente um sucesso nacional, mas foi o suficiente para entrar no topo da lista das mais ouvidas.")
+
+
+if (primeiro - segundo) > 5000000 :
+    print (f"{primeira_m} foi disparada a mais ouvida neste ano! Nenhuma outra música natalina chega aos pés dela!")
+elif (primeiro - segundo) < 1000000 :
+    print (f"{primeira_m} foi a mais ouvida, mas não podemos esquecer da música {segunda_m}! Fez bonito nesse feriado!")
