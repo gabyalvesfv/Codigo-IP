@@ -1,0 +1,45 @@
+nome_jogador_1 = str(input())
+pontuacao_1 = int(input())
+nome_jogador_2 = str(input())
+pontuacao_2 = int(input())
+nome_jogador_3 = str(input())
+pontuacao_3 = int(input())
+
+if nome_jogador_1 == "Rodri" :
+    print(f"O melhor jogador do mundo é {nome_jogador_1}, com {pontuacao_1} ponto(s).")
+    print("Os europeus, como sempre, roubaram o nosso ouro!")
+
+elif nome_jogador_2 == "Rodri" :
+    print(f"O melhor jogador do mundo é {nome_jogador_2}, com {pontuacao_2} ponto(s).")
+    print("Os europeus, como sempre, roubaram o nosso ouro!")
+
+elif nome_jogador_3 == "Rodri" :
+    print(f"O melhor jogador do mundo é {nome_jogador_3}, com {pontuacao_3} ponto(s).")
+    print("Os europeus, como sempre, roubaram o nosso ouro!")
+
+else :
+    if pontuacao_1 > pontuacao_2 and pontuacao_1 > pontuacao_3 :
+        print(f"O melhor jogador do mundo é {nome_jogador_1}, com {pontuacao_1} ponto(s).")
+        if nome_jogador_1 == "Vini Jr." :
+            print("Os brasileiros amaram o resultado! BAILA VINI!")
+
+        else:
+            print("Essa premiação perdeu o sentido mesmo, como que o Vini Jr. não ganhou? Muito roubado!")
+
+
+    elif pontuacao_2 > pontuacao_1 and pontuacao_2 > pontuacao_3 :
+        print(f"O melhor jogador do mundo é {nome_jogador_2}, com {pontuacao_2} ponto(s).")
+        if nome_jogador_2 == "Vini Jr." :
+            print("Os brasileiros amaram o resultado! BAILA VINI!")
+
+        else:
+            print("Essa premiação perdeu o sentido mesmo, como que o Vini Jr. não ganhou? Muito roubado!")
+
+
+    elif pontuacao_3 > pontuacao_1 and pontuacao_3 > pontuacao_2 :
+        print(f"O melhor jogador do mundo é {nome_jogador_3}, com {pontuacao_3} ponto(s).")
+        if nome_jogador_3 == "Vini Jr." :
+            print("Os brasileiros amaram o resultado! BAILA VINI!")
+
+        else:
+            print("Essa premiação perdeu o sentido mesmo, como que o Vini Jr. não ganhou? Muito roubado!")
