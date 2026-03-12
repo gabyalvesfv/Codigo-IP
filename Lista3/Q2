@@ -1,0 +1,53 @@
+fila_almoco = [] # lista dos nomes do primeiro input
+lista_trocas = [] # lista usada para guardar os nomes da troca da vez
+quant_trocas = [] # lista que guarda os nomes de todas as trocas mesmo que repetido
+
+trocas = ''
+
+fila = input() # com hifen
+fila_almoco = fila.split("-") # sem hifen
+
+while trocas != "Acabou!":
+    trocas = input() # com hifen
+    lista_trocas = trocas.split("-") # sem hifen
+    
+    if trocas != "Acabou!" :
+
+        if all(item in fila_almoco for item in lista_trocas):
+            quant_trocas = quant_trocas + lista_trocas # soma dos nomes a cada input novo
+            nome1 , nome2 = lista_trocas
+            idx = fila_almoco.index(nome1) 
+            idx2 = fila_almoco.index(nome2)
+            fila_almoco[idx], fila_almoco[idx2] = fila_almoco[idx2], fila_almoco[idx]
+            lista_trocas = []
+        else : 
+            print ("Essa dupla não esta na lista!")
+            lista_trocas = []
+
+# contagem nos nomes da lista quant_trocas
+nomes_unicos = []
+contagem = []
+
+# contagem dos nomes trocados
+for nome in quant_trocas:
+    if nome in nomes_unicos:
+        indice = nomes_unicos.index(nome)
+        contagem[indice] += 1
+    else:
+        nomes_unicos.append(nome)
+        contagem.append(1)
+
+# contagem dos nomes nao trocados 
+for nome in fila_almoco:
+    if nome not in nomes_unicos:
+        nomes_unicos.append(nome)
+        contagem.append(0)
+
+print("Fila do almoço:")
+for nome in fila_almoco:  
+    indice = nomes_unicos.index(nome)
+    if contagem[indice] != 1:
+        print(f"{nome}: {contagem[indice]} teleportes!")
+    else:
+        print(f"{nome}: {contagem[indice]} teleporte!")
+
