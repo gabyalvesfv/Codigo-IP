@@ -1,0 +1,155 @@
+# Listas de Ash
+nome_ash = []
+tipo_ash = []
+hp_ash = []
+nivel_ash = []
+
+# Listas de Gary
+nome_gary = []
+tipo_gary = []
+hp_gary = []
+nivel_gary = []
+
+usados_ash = []
+usados_gary = []
+vencedores = []
+
+vitoria_ash = 0
+vitoria_gary = 0
+
+# Quantidade de pokemon de cada
+quant_ash, quant_gary = input().split(" ")
+quant_ash = int(quant_ash)
+quant_gary = int(quant_gary)
+
+# Armazenamento do nome, tipo, hp e nivel de cada pokemon
+for i in range(1, quant_ash + quant_gary + 1):
+    nome, tipo, hp, nivel = input().split(', ')
+
+    if i <= quant_ash:
+        nome_ash.append(nome)
+        tipo_ash.append(tipo)
+        hp_ash.append(hp)
+        nivel_ash.append(nivel)
+    else:
+        nome_gary.append(nome)
+        tipo_gary.append(tipo)
+        hp_gary.append(hp)
+        nivel_gary.append(nivel)
+
+print("QUE COMECEM AS BATALHAS")
+
+decisao_ash = ''
+
+# Batalha 
+while quant_ash != 0 and quant_gary != 0:
+    decisao_ash = input()
+    num_ash, num_gary = input().split(' ')
+    num_ash = int(num_ash)
+    num_gary = int(num_gary)
+    
+    # Ash começa 
+    if (decisao_ash == "par" and (num_ash + num_gary) % 2 == 0) or (decisao_ash == "ímpar" and (num_ash + num_gary) % 2 == 1):
+        pokemon_ash = input().split(' ')
+        pokemon_gary = input().split(' ')
+
+        quant_ash -= 1
+        quant_gary -= 1
+
+        usados_ash.append(pokemon_ash[0])
+        usados_gary.append(pokemon_gary[0])
+
+        idx_ash = nome_ash.index(pokemon_ash[0])
+        idx_gary = nome_gary.index(pokemon_gary[0])
+
+        vhp_ash = int(hp_ash[idx_ash])
+        vhp_gary = int(hp_gary[idx_gary])
+
+        vnivel_ash = int(nivel_ash[idx_ash])
+        vnivel_gary = int(nivel_gary[idx_gary])
+
+        # Ataque 
+        n = 0
+        while vhp_ash > 0 and vhp_gary > 0:
+            n += 1
+            if n % 2 == 0:
+                vhp_ash -= (vnivel_gary * 2)
+            else:
+                vhp_gary -= (vnivel_ash * 2)
+        
+        # Gary como vencedor da rodada
+        if vhp_ash <= 0:
+            print(f"{pokemon_ash[0]} desmaiou e {pokemon_gary[0]} venceu esta luta")
+            vitoria_gary += 1
+            vencedores.append("Gary")
+
+        # Ash como venceddor da rodada
+        if vhp_gary <= 0:
+            print(f"{pokemon_gary[0]} desmaiou e {pokemon_ash[0]} venceu esta luta")
+            vitoria_ash += 1
+            vencedores.append("Ash")
+    
+    # Gary começa 
+    elif (decisao_ash == "ímpar" and (num_ash + num_gary) % 2 == 0) or (decisao_ash == "par" and (num_ash + num_gary) % 2 == 1): 
+        pokemon_ash = input().split(' ')
+        pokemon_gary = input().split(' ')
+    
+        quant_ash -= 1
+        quant_gary -= 1
+
+        usados_ash.append(pokemon_ash[0])
+        usados_gary.append(pokemon_gary[0])
+
+        idx_ash = nome_ash.index(pokemon_ash[0])
+        idx_gary = nome_gary.index(pokemon_gary[0])
+
+        vhp_ash = int(hp_ash[idx_ash])
+        vhp_gary = int(hp_gary[idx_gary])
+
+        vnivel_ash = int(nivel_ash[idx_ash])
+        vnivel_gary = int(nivel_gary[idx_gary])
+
+        # Ataque 
+        n = 0
+        while vhp_ash > 0 and vhp_gary > 0:
+            n += 1
+            if n % 2 == 0:
+                vhp_ash -= (vnivel_gary * 2)
+            else:
+                vhp_gary -= (vnivel_ash * 2)
+        
+        # Gary como vencedor da rodada
+        if vhp_ash <= 0:
+            print(f"{pokemon_ash[0]} desmaiou e {pokemon_gary[0]} venceu esta luta")
+            vitoria_gary += 1
+            vencedores.append("Gary")
+
+        # Ash como venceddor da rodada
+        if vhp_gary <= 0:
+            print(f"{pokemon_gary[0]} desmaiou e {pokemon_ash[0]} venceu esta luta")
+            vitoria_ash += 1
+            vencedores.append("Ash")
+
+print('=============== ===============')
+
+for v in range(len(vencedores)):
+    if vencedores[v] == "Ash":
+        print(f"{v+1}° Batalha: {usados_ash[v].upper()} vs {usados_gary[v].lower()}")
+    elif vencedores[v] == "Gary":
+        print(f"{v+1}° Batalha: {usados_ash[v].lower()} vs {usados_gary[v].upper()}")
+
+if len(nome_ash) > 0 and len(nome_gary) > 0:
+    if vitoria_ash > vitoria_gary:
+        print("Ash é o grande vencedor!")
+    elif vitoria_ash < vitoria_gary:
+        print("Gary é o grande vencedor!")
+    else:
+        print("Depois de todas as batalhas, ainda terminou em empate!")
+elif len(nome_ash) == 0 and len(nome_gary) > 0:
+    print("Ash deixou seus pokemons descansando!")
+    print("Gary é o grande vencedor!")
+elif len(nome_ash) > 0 and len(nome_gary) == 0:
+    print("Gary deixou seus pokemons descansando!")
+    print("Ash é o grande vencedor!")
+else:
+    print("Nenhuma batalha foi concluída.")
