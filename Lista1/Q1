@@ -1,0 +1,16 @@
+nome_jogador_1 = input()
+pontuacao_1 = int(input())
+nome_jogador_2 = input()
+pontuacao_2 = int(input())
+nome_jogador_3 = input()
+pontuacao_3 = int(input())
+
+if nome_jogador_1 == "Lucas Lima" or nome_jogador_2 == "Lucas Lima" or nome_jogador_3 == "Lucas Lima" :
+    print("Deu a lógica! Acabou caô, o Lucas Lima ganhoooouuu, Lucas Lima ganhoooouu oohhh!!!")
+else :
+    if pontuacao_1 > pontuacao_2 and pontuacao_1 > pontuacao_3 :
+        print(nome_jogador_1 , "é eleito o bola de ouro!")
+    elif pontuacao_2 > pontuacao_1 and pontuacao_2 > pontuacao_3 :
+        print(nome_jogador_2 , "é eleito o bola de ouro!")
+    elif pontuacao_3 > pontuacao_1 and pontuacao_3 > pontuacao_2 :
+        print(nome_jogador_3 , "é eleito o bola de ouro!")
