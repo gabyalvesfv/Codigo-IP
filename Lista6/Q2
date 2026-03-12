@@ -1,0 +1,61 @@
+
+prioridade = {}
+
+for i in range (1, 4) :
+    pontuacao = 0
+    
+    nome_estabelecimento = input()
+    aprovacao = input()
+    orcamento = int(input())
+    categoria = input()
+  
+    # Primeiro critério de desempate 
+    if aprovacao == "APROVA" :
+        pontuacao += 5
+    elif aprovacao == "TANTO FAZ" :
+        pontuacao += 2
+    elif aprovacao == "DESAPROVA" :
+        pontuacao += 0
+        
+    # Segundo critério de desempate 
+    if orcamento > 1000000 :
+        pontuacao += 3
+    elif 500000 <= orcamento < 1000000  :
+        pontuacao += 4
+    elif orcamento < 500000 :
+        pontuacao += 5
+        
+    # Terceiro critério de desempate 
+    if categoria == "Defesa" :
+        pontuacao += 5
+    elif categoria ==  "Ciencia" :
+        pontuacao += 4
+    elif categoria == "Lazer" :
+        pontuacao += 3
+    else :
+        pontuacao += 0
+    
+    prioridade[nome_estabelecimento] = {"pontuacao": pontuacao, "aprovacao": aprovacao, "orcamento": orcamento, "categoria": categoria}
+
+# Ordena por pontação e depois por orçamento 
+prioridade = dict(sorted(prioridade.items(), key=lambda items: (-items[1]['pontuacao'], items[1]['orcamento'])))
+print()
+k = 0
+for nome_estabelecimento in prioridade.keys() :
+    if k == 0 :
+        print(f"O primeiro estabelecimento construído deve ser {nome_estabelecimento}, com um orçamento de {prioridade[nome_estabelecimento]['orcamento']} e com a funcionalidade de {prioridade[nome_estabelecimento]['categoria']}.")
+        k += 1
+    elif k == 1 :
+        print(f"O segundo estabelecimento construído deve ser {nome_estabelecimento}, com um orçamento de {prioridade[nome_estabelecimento]['orcamento']} e com a funcionalidade de {prioridade[nome_estabelecimento]['categoria']}.")
+        k += 1
+    elif k == 2 :
+        print(f"O terceiro estabelecimento construído deve ser {nome_estabelecimento}, com um orçamento de {prioridade[nome_estabelecimento]['orcamento']} e com a funcionalidade de {prioridade[nome_estabelecimento]['categoria']}.")
+
+
+for nome, dados in prioridade.items() :
+    if dados['categoria'] == "Defesa" :
+        print ("Oba, agora a cidade estará mais segura.")
+    elif dados['categoria'] == "Ciencia" :
+        print ("Agora sim vou poder ter uma vida intelectual.")
+    elif dados['categoria'] == "Lazer" :
+        print ("Vamooo, agora posso curtir meu final de semana descansando na bela cidade do Recife.")
