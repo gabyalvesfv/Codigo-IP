@@ -1,0 +1,57 @@
+dicionario_lideres = {}
+dicionario_acontecimentos = {}
+
+while True :
+    registra = input()
+
+    if registra == "REGISTRAR LÍDER" :
+        nome = input()
+        cargo = input()
+        cidade_origem = input()
+        data_nascimento = input()
+
+        # Armazemento das informações do líder
+        informacoes_lideres = (cargo, cidade_origem, data_nascimento)
+        dicionario_lideres[nome] = informacoes_lideres
+
+    elif registra == "REGISTRAR ACONTECIMENTO" :
+        data = input()
+        acontecimento = input()
+        local = input()
+
+        # Armazemento das informações do acontecimento 
+        informacoes_acontecimentos = (acontecimento, local)
+        dicionario_acontecimentos[data] = informacoes_acontecimentos
+    
+    elif registra == "FIM" :
+        break
+
+# Caso pelo menos um líder tenha sido registrado
+if dicionario_lideres != {} :
+    print ("Consegui encontrar os seguintes líderes da Revolução Pernambucana de 1817:")
+    for nome, informacao in dicionario_lideres.items() :
+        print(f"{nome}:")
+        print(f"- Cargo/Papel: {informacao[0]}")
+        print(f"- Cidade de Origem: {informacao[1]}")
+        print(f"- Data de Nascimento: {informacao[2]}")
+
+# Caso contrário
+else :
+    print ("Aff, pelo jeito nessa época não tinha LinkedIn pra facilitar encontrar os tais líderes dessa tal Revolução... Desisto.")
+
+print ()
+
+# Caso pelo menos um acontecimento tenha sido registrado
+if dicionario_acontecimentos != {} :
+    print ("Vivenciei os seguintes acontecimentos históricos da Revolução Pernambucana de 1817:")
+    for data, informacoes in dicionario_acontecimentos.items():
+        print(f"({data}): {informacoes[0]}, {informacoes[1]}")
+
+# # Caso contrário
+else :
+    print ("Ter que ler todos esses jornais não é legal, e ainda não encontrei nenhum acontecimento... saudade do Pernambuco Extraordinário pra me manter informado.")
+
+# Caso ambos os registros de líderes e acontecimentos não foram vazios
+if dicionario_lideres != {} and dicionario_acontecimentos != {} :
+    print ()
+    print ("Pronto, agora CIn tô preparado pra lutar e tornar Pernambuco o melhor país em linha reta do mundo!!!")
