@@ -1,0 +1,46 @@
+lista_sequencia = []
+consecutivos = []
+lista_sequencia_gj = []
+
+# Sequencia de Gojo
+sequencia_gojo = input()
+lista_sequencia = sequencia_gojo.split("-")  
+lista_sequencia = [int(numero) for numero in lista_sequencia]
+
+# Sequencia de Geto 
+tam_sequencia_geto = int(input())
+soma_sequencia_geto = int(input())
+
+# Identifica os numeros consecutivos 
+consecutivos = [lista_sequencia[0]]
+for i in range (1, len(lista_sequencia)) :
+    if lista_sequencia [i] == lista_sequencia [i - 1] + 1 :
+        consecutivos.append(lista_sequencia[i])
+    else:
+        lista_sequencia_gj.append(consecutivos)
+        consecutivos = [lista_sequencia[i]]
+
+lista_sequencia_gj.append(consecutivos)
+
+# Sequencia de Gojo selecionada 
+sequencia_final = []
+maior_soma = 0
+for sequencia in lista_sequencia_gj :
+    if len(sequencia) > len(sequencia_final) :
+        sequencia_final = sequencia
+        maior_soma = sum(sequencia)
+    elif len(sequencia) == len(sequencia_final) :
+        if sum (sequencia) > maior_soma:  
+            sequencia_final = sequencia
+            maior_soma = sum(sequencia)
+
+if len(sequencia_final) > tam_sequencia_geto : # Gojo vence sem desempate
+    print ("Uma vitória avassaladora de Satoru Gojo. Nem mesmo o infinito pode pará-lo. Ele realmente é o melhor!")
+elif len(sequencia_final) < tam_sequencia_geto : # Geto vence sem desempate
+    print ("Inesperado! Suguru Geto domina com maestria. Uma vitória indiscutível!")
+elif sum(sequencia_final) > soma_sequencia_geto : # Gojo vence com empate
+    print ("Gojo vence por pouco. Mesmo com toda a pressão, ele continua no topo!")
+elif sum(sequencia_final) < soma_sequencia_geto : # Geto vence com empate
+    print ("Geto vence por pouco. Sua estratégia foi impecável nesta batalha!")
+else : # Empate duplo
+    print ("Um empate absoluto! Quem diria que duas lendas podem ser tão iguais em poder?")
