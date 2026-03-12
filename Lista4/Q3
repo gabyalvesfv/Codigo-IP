@@ -1,0 +1,60 @@
+personagens_da_serie = ["Jinx", "Vi", "Heimerdinger", "Ekko", "Caitlyn", "Jayce", "Viktor", "Silco", "Claggor", "Vander", "Mylo"]
+
+contador = 0
+lista_final = []
+
+# Insere o nome de um personagem na lista
+def adiciona_personagem(personagem) :
+    for i in range (len(lista_final)) :
+        if lista_final[i] == '':
+            lista_final[i] = personagem
+            break
+    
+# Remove o nome de um personagem da lista
+def remove_personagem(personagem) :
+    for i in range (len(lista_final)) :
+        if lista_final[i] == personagem:
+            lista_final[i] = ''
+
+            for k in range(i, len(lista_final) - 1):
+                lista_final[k] = lista_final[k + 1]
+                lista_final[-1] 
+    
+# Verifica se todos os personagens na lista são válidos
+def checa_vitoria() :
+    global contador
+    for personagem in lista_final :
+        if personagem in personagens_da_serie :
+            contador += 1
+        else : 
+            contador += 0 
+    
+
+numero_maximo = int(input())
+
+lista_final = [""] * numero_maximo
+
+# Recebe input ate que todos os espaços da lista sejam preenchidos 
+while '' in lista_final :
+    comando = input()
+    personagem = input()
+
+    if comando == "Adiciona" :
+        adiciona_personagem(personagem)
+        print (f"Personagem {personagem} adicionado")
+    elif comando == "Remove" :
+        remove_personagem(personagem)
+        print (f"Personagem {personagem} removido")
+
+print ("Lista final de personagens:")
+for personagem in lista_final:
+    print(personagem)
+
+checa_vitoria()
+
+if contador == len(lista_final) :
+    print ("Parabéns!! Você conseguiu acertar todos os nomes.")
+    print ("UAUUU! Acho que estamos preparados para ver a segunda temporada.")
+else :
+    print ("Infelizmente você perdeu...")
+    print ("Eita... Vamos precisar assistir novamente.")
