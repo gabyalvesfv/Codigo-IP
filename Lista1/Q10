@@ -1,0 +1,85 @@
+proj_desempenho = str(input())
+proj_participacao_gols = int(input())
+desemp_final = str(input())
+
+pont = 0
+particip_gols_final = 37
+
+print("Está aberta a revisão da premiação!")
+
+# Análise da Projeção de Desempenho para a temporada
+if proj_desempenho == "Decepção" :
+    pont = pont + 100
+    imp = 1
+    print ("Parece que não estão colocando muitas expectativas para a temporada do nosso Vini Jr., não... Sempre subestimado!")
+elif proj_desempenho == "Oscilação" :
+    pont = pont + 200
+    imp = 2
+    print ("Os jornalistas acreditam que Vini Jr. terá atuações irregulares nesta temporada, mas quem sabe ele não supera as projeções?")
+elif proj_desempenho == "Importante" : 
+    pont = pont + 300
+    imp = 3
+    print ("Em um elenco tão forte como o do Real Madrid, é normal as atenções serem divididas mesmo. O que importa é que ele não vai se esconder!")
+elif proj_desempenho == "Estrela" :
+    pont = pont + 400
+    imp = 4
+    print ("Vini Jr. será o craque do Real Madrid na temporada de 2023/2024! Será que ele consegue a tão sonhada Bola de Ouro?")
+
+# Análise da Projeção de Desempenho para a temporada
+pont2 = (pont / 2) + (2 * proj_participacao_gols)
+
+# Análise do Desempenho Final de Vini Jr. ao fim da temporada
+if desemp_final == "Decepção" :
+    pont3 = 150
+    imp2 = 1
+    print ("Vini Jr. decepcionou os torcedores em 2024, não era o ano dele.")
+elif desemp_final == "Oscilação" :
+    pont3 = 250
+    imp2 = 2
+    print ("A temporada não foi das melhores, mas Vini Jr. conseguiu mostrar, em alguns momentos, que ele de fato é craque.")
+elif desemp_final == "Importante" :
+    pont3 = 350
+    imp2 = 3
+    print("Vini Jr. mostrou que é crucial para o elenco do Real Madrid e da Seleção.")
+elif desemp_final == "Estrela" :
+    pont3 = 500
+    imp2 = 4
+    print ("Ele é demais! Herói do título da Champions, ele conseguiu mostrar ao mundo que é uma estrela do futebol!")
+
+# Comparação entre a Projeção de Desempenho e o Desempenho Final ao fim da temporada
+if imp == imp2 :
+    print ("A mídia estava certa! Vini Jr. se manteve dentro das projeções dos jornalistas, mas será que é suficiente para vencer o Rodri?")
+    pont4 = 100
+elif imp2 > imp :
+    print ("Ele sempre aparece em momentos importantes! Nunca duvidem do Malvadeza, ele é muito craque!")
+    pont4 = 300
+elif imp2 < imp :
+    print ("É, parece que Vini Jr. foi mal esse ano, o sonho está cada vez mais distante.")
+    pont4 = 0
+
+# Para a Comparação entre a participação em gols prevista e final
+if particip_gols_final > proj_participacao_gols :
+    print ("Vini Jr. foi muito decisivo para sua equipe este ano, superando sua previsão de participações em gols!")
+else :
+    print ("É, Vini Jr. não conseguiu provar que estavam errados, mas ainda assim ele segue vivo para a premiação.")
+
+pont_total = pont + pont2 + pont3 + pont4
+
+# Determinação do Resultado Final:
+if pont_total > 1170 :
+    print (f"O mundo estava certo! Com {pont_total:.0f} pontos, Vini Malvadeza é o verdadeiro melhor do mundo! Chega dessa injustiça!")
+elif pont_total < 1170 :
+    print ("Infelizmente, teremos que nos contentar com o Rodri sendo o melhor do mundo mesmo.")
+elif pont_total == 1170 :
+    print ("Empate! Vamos ao critério de desempate.")
+
+# Critério de Desempate
+if pont_total == 1170 :
+    if pont3 > 350 :
+        melhor = "Vini Jr."
+        if melhor == "Vini Jr." :
+            print ("Foi uma premiação apertada, mas a justiça foi feita! Vini Jr. é, sim, o melhor do mundo.")
+    else :
+        melhor = "Rodri"
+        if melhor == "Rodri":
+            print ("Bom, é isso. Ainda tivemos esperanças, mas o Rodri é, mesmo, o Bola de Ouro.")
