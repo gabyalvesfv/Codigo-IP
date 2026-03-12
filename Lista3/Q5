@@ -1,0 +1,23 @@
+limite_animes = int(input())
+quant_animes = int(input())
+
+lista_animes = []
+
+for i in range (1, quant_animes + 1) :
+    nome_quant_quem = input()
+    nome, quant, quem = nome_quant_quem.split(" - ") 
+    quant = int(quant)
+
+    if len(lista_animes) < limite_animes :
+        if quem == "Walter" :
+            print (f"O {nome} foi adicionado à lista de animes para assistir.")
+            lista_animes.append(nome)
+        elif quem == "Internet" and quant <= 16 :
+            print (f"O {nome} foi adicionado à lista de animes para assistir.")
+            lista_animes.append(nome)
+        elif quem == "Internet" and quant > 16 :
+            print (f"O {nome} é muito longo, fica pra próxima.")
+    elif len(lista_animes) >= limite_animes :
+        print (f"A lista de animes está cheia. O {nome} não foi adicionado.")
+
+print (f"Lista final para assistir:{lista_animes}")
