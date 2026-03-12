@@ -1,0 +1,41 @@
+energia_inicial = 0
+consumo_total = 0
+gasto_maquina = 0
+gasto_total = 0
+
+lista_gasto_total = []
+
+def consumo_total_func(potencia, tempo, porcentagem) :
+    global energia_inicial, consumo_total
+    energia_inicial = potencia * tempo
+    ineficiencia = energia_inicial * (porcentagem / 100)
+    consumo_total = energia_inicial + ineficiencia
+
+def gasto_total_func(consumo_total, preco_quant):
+    global gasto_maquina
+    gasto_maquina = consumo_total * preco_quant    
+
+quant_maquinas = int(input())
+for i in range (quant_maquinas) :
+    tempo = int(input())
+    potencia = float(input())
+    porcentagem = int(input())
+    preco_quant = float(input())
+
+    consumo_total_func(potencia, tempo, porcentagem) # Chama a função que define o consumo total
+
+    if energia_inicial == 0 :
+        print ("Parece que essa coisa nem ao menos funciona")
+    elif 0 < consumo_total <= 100 :
+        print (f"Temos aqui uma máquina formidável, seu consumo de energia é {consumo_total:.2f}")
+    elif 100 < consumo_total <= 300 :
+        print (f"Você tem certeza que essa coisa não vai explodir? seu consumo de energia é {consumo_total:.2f}")
+    elif consumo_total > 300 :
+        print ("Você se importaria de jogar seus explosivos em qualquer outro lugar?")
+
+    gasto_total_func(consumo_total, preco_quant) # Chama a função que define o gasto inicial
+    lista_gasto_total.append(gasto_maquina) # Adiciona o gasto de cada maquina em uma lista para identificar a mais cara
+    gasto_total += gasto_maquina # Soma os gastos das maquinas para  ter o gasto total
+
+print (f"Os gastos totais com as maquinas foi de {gasto_total:.2f}")
+print (f"A máquina mais cara gasta um total de {max(lista_gasto_total):.2f} para os cofres de Piltover")
