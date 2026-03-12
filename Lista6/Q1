@@ -1,0 +1,55 @@
+registros = {}
+
+cidade = ''
+total_revolucionarios = 0
+
+while cidade != "FIM" :
+    cidade = input()
+    if cidade == "FIM" :
+        break 
+
+    comando = input()
+
+    if comando == 'adicionar' :
+        dados_formato = input().split(', ')
+
+        lider = dados_formato[0]
+        batalha = dados_formato[1]
+        revolucionarios = int(dados_formato[2])
+
+        # Adiciona quant de revolucionarios desse input no total
+        total_revolucionarios += revolucionarios
+
+        if cidade not in registros : # Cidade não registrada 
+            print(f"Dados adicionados para {cidade}.")
+        elif cidade in registros : # Cidade registada 
+            total_revolucionarios -= registros[cidade]["revolucionários"]
+            print(f"Atualizando a cidade {cidade}...")
+            print(f"Dados atualizados para {cidade}.")
+
+        registros[cidade] = {"líder": lider, "batalha": batalha, "revolucionários": revolucionarios}
+
+    elif comando == 'deletar' :
+        if cidade in registros : # Cidade registada 
+            print(f"Dados removidos para a cidade {cidade}.")
+            total_revolucionarios -= registros[cidade]["revolucionários"]
+            del registros[cidade] # Deleta as informações da cidade
+
+        elif cidade not in registros : # Cidade não registrada 
+            print(f"Nenhum dado encontrado para a cidade {cidade}.")
+
+    else :
+        print("Comando inválido! Digite 'adicionar' ou 'deletar'.")
+
+print("RESUMO DAS CONTRIBUIÇÕES DA REVOLUÇÃO PERNAMBUCANA")
+print("--------------------------------------------------")
+
+for cidade, dados_formato in registros.items() :
+    lider = dados_formato["líder"]
+    batalha = dados_formato["batalha"]
+    revolucionarios = dados_formato["revolucionários"]
+    
+    # Calcula a porcentagem de revolucionarios de cada cidade em cima do total
+    porcentagem = (revolucionarios / total_revolucionarios) * 100
+
+    print(f"{cidade}: O(a) líder {lider} liderou a {batalha} com {porcentagem:.2f}% dos revolucionários registrados.")
