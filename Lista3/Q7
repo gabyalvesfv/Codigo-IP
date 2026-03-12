@@ -1,0 +1,67 @@
+animes_favoritos = [
+    'Fullmetal Alchemist: Brotherhood', 
+    'Attack On Titan', 
+    'Death Note', 
+    'Naruto', 
+    'One Piece', 
+    'Demon Slayer', 
+    'Dragon Ball Z', 
+    'Jujutsu Kaisen', 
+    'Pokemon', 
+    'Bleach'
+]
+
+animes_votados = []
+pontuacao = []
+
+num_amigos = int(input())
+
+print (f"{num_amigos} amigos participaram da votação!")
+
+for i in range (1, num_amigos + 1) : # nomes dos amigos de acordo com a quantidade de amigos
+    nome_amigo = input()
+    print (f"{nome_amigo} é a {i}ª pessoa à votar!")
+
+    animes_votados = []
+
+    for k in range(1, 4):  # votos para primeiro, segundo e terceiro lugar
+        anime = input()
+        anime = anime.title()
+
+        while anime not in animes_favoritos or anime in animes_votados:
+            if anime not in animes_favoritos:
+                print(f"O anime {anime} não está presente na votação!")
+            elif anime in animes_votados:
+                print(f"{nome_amigo}, você já votou neste anime! Escolha um outro anime para ocupar a sua {k}º posição!")
+            anime = input()
+            anime = anime.title()
+
+        animes_votados.append(anime)
+
+        if k == 1 :
+            pontuacao.append(anime)
+            pontuacao.append(anime)
+            pontuacao.append(anime)
+        elif k == 2 :
+            pontuacao.append(anime)
+            pontuacao.append(anime)
+        elif k == 3 :
+            pontuacao.append(anime)
+        print(f"{nome_amigo} colocou {anime} em {k}º lugar do seu ranking!")
+
+vencedor = ""
+maior_pontos = 0
+
+for anime in animes_favoritos:
+    pontos = pontuacao.count(anime)  
+    if pontos > maior_pontos:  
+        maior_pontos = pontos
+        vencedor = anime
+
+
+print(f"Com {maior_pontos} pontos, {vencedor} foi votado como o melhor anime!")
+
+if vencedor == "Pokemon" :
+     print("César - Pokémon é o melhor anime da história!!!")
+
+print("Eita mandaram dúvida no discord, vou lá responder!")
