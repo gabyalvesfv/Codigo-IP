@@ -1,0 +1,145 @@
+quant_materiais = int(input())
+
+quant_letras_certas = 0
+materiais_desbloqueados = 0
+
+print ("Bem-vindo à missão dos duendes! Vamos construir o trenó mágico do Papai Noel!")
+print ("Quantos materiais mágicos estão trancados nos baús?")
+print ("Vamos começar desbloqueando os materiais!")
+
+for i in range (1, quant_materiais + 1) :
+    nome_item = input()
+    temp = nome_item 
+    item_secreto = ''
+    letras_certas = ''
+    letras_erradas = ''
+    print (f"Material {i} de {quant_materiais}")
+
+    for k in (nome_item) :
+        if k == " " :
+            item_secreto += ' '
+        else :
+            item_secreto += "_"
+    print ("Senha mágica:",item_secreto)
+
+    if len(nome_item) <= 5 :
+        tentativas = 7
+    elif 5 < len(nome_item) <= 10 :
+        tentativas = 9
+    elif 10 < len(nome_item) <= 13 :
+        tentativas = 13 
+    elif len(nome_item) > 13 :
+        tentativas = 16 
+
+    for t in range (1, tentativas + 1) :
+        letra = input()
+
+        for l in (nome_item) :
+            if l == letra :
+                quant_letras_certas += 1
+
+        if t < tentativas :
+
+            if quant_letras_certas == 0 and letra not in letras_certas :
+                letras_erradas += letra
+                print ("Erramos a letra! Porém ainda temos mais tentativas.")
+            
+            elif quant_letras_certas == 0 and letra in letras_erradas :
+                print ("Erramos a letra! Porém ainda temos mais tentativas.")
+            
+            elif quant_letras_certas == 1 and letra not in letras_certas :
+                letras_certas += letra
+                print ("Acertamos uma letra! Ela aparece um total de 1 vez na senha")
+                nome_item = nome_item.replace(letra, '')
+
+            elif quant_letras_certas > 1 and letra not in letras_certas  :
+                letras_certas += letra 
+                print (f"Acertamos uma letra! Ela aparece um total de {quant_letras_certas} vezes na senha")
+                nome_item = nome_item.replace(letra, '')
+            
+            quant_letras_certas = 0
+
+        if len(nome_item.replace(' ', '')) == 0 and tentativas > t :
+            print (f"Parabéns! Você desbloqueou o material mágico '{temp}'!")
+            materiais_desbloqueados += 1
+            break
+        
+        if tentativas == t :
+
+            if quant_letras_certas == 1 and letra not in letras_certas :
+                letras_certas += letra
+                print ("Acertamos uma letra! Ela aparece um total de 1 vez na senha")
+                nome_item = nome_item.replace(letra, '')
+            elif quant_letras_certas > 1 and letra not in letras_certas :
+                letras_certas += letra 
+                print (f"Acertamos uma letra! Ela aparece um total de {quant_letras_certas} vezes na senha")
+                nome_item = nome_item.replace(letra, '')
+            
+            if len(nome_item.replace (' ', '')) == 0 :
+                materiais_desbloqueados += 1
+                print (f"Parabéns! Você desbloqueou o material mágico '{temp}'!")
+            elif len(nome_item.replace(' ', '')) != 0 :
+
+                if quant_letras_certas >= 1 :
+                    print (f"Você não conseguiu desbloquear o material. O nome correto era '{temp}'.")
+                elif quant_letras_certas < 1 and (quant_letras_certas < 1) or (letra in letras_certas or letra in letras_erradas) :
+                    print ("Infelizmente não conseguimos descobrir a senha.")
+                    print (f"Você não conseguiu desbloquear o material. O nome correto era '{temp}'.")
+            quant_letras_certas = 0
+
+print (f"Você desbloqueou {materiais_desbloqueados} de {quant_materiais} materiais mágicos!")
+print ("Os duendes precisam decifrar os códigos perdidos para montar o trenó!")
+print ("Quantas partes o trenó possui?")
+
+partes_treno = int(input())
+partes_montadas = 0 
+
+for p in range(1, partes_treno + 1) :
+    print(f"Parte {p} de {partes_treno}")
+    numero_str = input() + " "
+    numero_armazenado = ""
+    menor_numero = 10e10
+    maior_numero = 0
+    for n in (numero_str):
+        if n.isnumeric() :
+            numero_armazenado += n 
+        else : 
+            if maior_numero < int(numero_armazenado) :
+                maior_numero = int(numero_armazenado)
+            numero_armazenado = ""
+    numero_armazenado = ""
+    for m in (numero_str) :
+        if m.isnumeric() :
+            numero_armazenado += m
+        else :
+            if menor_numero > int(numero_armazenado) :
+                menor_numero = int(numero_armazenado)
+            numero_armazenado = ""
+    numero_armazenado = ""
+
+    print(f"Dica: O menor número é {menor_numero} e o maior número é {maior_numero}.")
+
+    for y in range(0,2) :
+        print(f"Descubra o número mágico (soma de {menor_numero} e {maior_numero})")
+        chute_soma = int(input())
+       
+        if chute_soma == menor_numero + maior_numero :
+            partes_montadas += 1
+            print(f"Você decifrou o código da parte {p}! O trenó está mais próximo de ficar completo!")
+            break
+
+        elif chute_soma !=  menor_numero + maior_numero:
+            print("Número incorreto! Tente novamente.")
+                
+    if  chute_soma != menor_numero + maior_numero:
+        print(f"Você não conseguiu decifrar o código. O número mágico era {maior_numero + menor_numero}.")
+
+
+print(f"Você montou {partes_montadas} de {partes_treno} partes do trenó!")
+
+if partes_montadas == partes_treno:
+    print("Parabéns! O trenó está completo e pronto para voar!")
+elif partes_montadas >= int(partes_treno / 2 ):
+    print("Bom trabalho! O trenó quase ficou completo!")
+else:
+   print("Parece que o trenó ficou incompleto. Tente novamente na próxima missão!")
