@@ -1,0 +1,153 @@
+num_renas = int(input())
+num_voltas = int(input())
+
+pontos_rena = 0 
+soma_voltas = 0
+
+rena1 = " "
+rena2 = " "
+rena3 = " "
+
+pontos_rena1 = 0 
+pontos_rena2 = 0
+pontos_rena3 = 0 
+
+i3 = 0 
+
+if num_renas >= 3 :
+
+    for i in range (1, num_renas + 1) :
+        nome_rena = input()
+
+        if num_renas == 3 :
+            i3 = 1 
+
+            if i == 1 :
+                rena1 = nome_rena
+            elif i == 2 :
+                rena2 = nome_rena
+            elif i == 3 :
+                rena3 = nome_rena 
+            
+        elif num_renas > 3 :
+
+            for k in (nome_rena) :
+                if k.lower() == "a" :
+                    pontos_rena += 8 
+                elif k.lower() == "e" :
+                    pontos_rena += 5
+                elif k.lower() == "i" :
+                    pontos_rena += 4
+                elif k.lower() == "o" :
+                    pontos_rena += 3
+                elif k.lower() == "u" :
+                    pontos_rena += 2
+
+            for j in range (1, num_voltas + 1) :
+                if (pontos_rena % j) == 0 :
+                    soma_voltas += 2 
+                elif (pontos_rena % j) % 2 == 0 :
+                    soma_voltas += 1
+                elif (pontos_rena % j) % 2 == 1 :
+                    soma_voltas += 0 
+
+            pontos_rena += soma_voltas
+            soma_voltas = 0
+
+            if i == 1 :
+                rena1 = nome_rena 
+                pontos_rena1 = pontos_rena 
+                pontos_rena = 0
+
+            elif i == 2 :
+                rena2 = nome_rena 
+                pontos_rena2 = pontos_rena 
+                pontos_rena = 0
+
+                if pontos_rena2 > pontos_rena1 :
+                    temp = rena2
+                    rena2 = rena1
+                    rena1 = temp 
+                    temp2 = pontos_rena2
+                    pontos_rena2 = pontos_rena1 
+                    pontos_rena1 = temp2
+
+            elif i == 3 :
+                rena3 = nome_rena
+                pontos_rena3 = pontos_rena 
+                pontos_rena = 0
+    
+                if pontos_rena3 > pontos_rena2 and pontos_rena1 >= pontos_rena3 :
+                    temp = rena3 
+                    rena3 = rena2
+                    rena2 = temp 
+                    temp2 = pontos_rena3
+                    pontos_rena3 = pontos_rena2 
+                    pontos_rena2 = temp2
+                elif pontos_rena3 > pontos_rena2 and pontos_rena3 > pontos_rena1 :
+                    temp = rena2
+                    rena2 = rena3 
+                    rena3 = temp 
+                    temp2 = rena1
+                    rena1 = rena2
+                    rena2 = temp2 
+                    temp3 = pontos_rena2 
+                    pontos_rena2 = pontos_rena3 
+                    pontos_rena3 = temp3
+                    temp4 = pontos_rena1 
+                    pontos_rena1 = pontos_rena2 
+                    pontos_rena2 = temp4 
+
+            elif i > 3 :
+
+                if pontos_rena < pontos_rena3 :
+                    pontos_rena = 0
+                elif pontos_rena > pontos_rena3 and pontos_rena <= pontos_rena2:
+                    temp = nome_rena 
+                    rena3 = temp
+                    temp2 = pontos_rena
+                    pontos_rena3 = temp2
+                    pontos_rena = 0
+                elif pontos_rena > pontos_rena3 and pontos_rena > pontos_rena2 and pontos_rena <= pontos_rena1 :
+                    temp = nome_rena
+                    rena3 = temp
+                    temp2 = rena2
+                    rena2 = rena3 
+                    rena3 = temp2
+                    temp3 = pontos_rena
+                    pontos_rena3 = temp3
+                    temp4 = pontos_rena2 
+                    pontos_rena2 = pontos_rena3 
+                    pontos_rena3 = temp4
+                    pontos_rena = 0
+                elif pontos_rena > pontos_rena3 and pontos_rena > pontos_rena2 and pontos_rena > pontos_rena1 : 
+                    temp = nome_rena
+                    rena3 = temp
+                    temp2 = rena2 
+                    rena2 = rena3 
+                    rena3 = temp2 
+                    temp3 = rena2 
+                    rena2 = rena1 
+                    rena1 = temp3   
+                    temp4 = pontos_rena
+                    pontos_rena3 = temp4
+                    temp5 = pontos_rena2
+                    pontos_rena2 = pontos_rena3
+                    pontos_rena3 = temp5 
+                    temp6 = pontos_rena2 
+                    pontos_rena2 = pontos_rena1 
+                    pontos_rena1 = temp6 
+                    pontos_rena = 0
+                
+
+    if i3 == 1 :
+        print ("Como só temos 3 renas aptas pro serviço esse ano, não adianta muito querer ficar escolhendo")
+        print ("As três únicas renas capazes de participar esse ano são:")
+        print (f"{rena1}, {rena2} e {rena3}.")
+        print ("Não haverá teste de desempenho entre elas!")
+    else :
+        print ("As três renas mais atléticas pra temporada de Natal são:")
+        print(f"{rena1}, {rena2} e {rena3}.")
+
+else :
+    print ("Meu senhor, com essa quantidade de rena vai ter que entregar os presentes a pé, viu?!")
